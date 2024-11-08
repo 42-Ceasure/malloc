@@ -39,12 +39,36 @@ void	dump_heap(void)
 	}
 }
 
+void	dump_byte(char byte)
+{
+	printf("%x%x", ((byte & 0xF0) >> 4), ((byte & 0x0F) >> 4));
+}
+
+void	dump_chunk_datas(void *ptr)
+{
+	size_t	i;
+	size_t	size;
+	char	*byte;
+
+	i = 0;
+	size = get_chunk_size(ptr);
+	if (size > 256)
+		return ;
+	byte = usrptr_from_chunk(ptr);
+	printf("%zu,", size);
+	while (i < size - DATA_SIZE)
+		dump_byte(byte[i++]);
+	printf(",%zu\n", size);
+}
+
 void	dump_chunk(void *ptr)
 {
 	if (ptr)
 	{
-		printf("address:%p,", ptr);
-		printf("used:%d,", is_chunk_free(ptr));
+		printf("chunkptr:%p,", ptr);
+		printf("usrptr:%p,", usrptr_from_chunk(ptr));
+		printf("status:%s,", is_chunk_used(ptr) == 1 ? "USED" : "FREE");
 		printf("size:%zu\n", get_chunk_size(ptr));
+		// dump_chunk_datas(ptr);
 	}
 }

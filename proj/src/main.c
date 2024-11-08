@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <mymalloc.h>
-#define TEST 20
+#define TEST 40
 
 int main(int ac, char **av)
 {
@@ -29,7 +29,7 @@ int main(int ac, char **av)
 	i = 0;
 	while (i < TEST)
 	{
-		if (i % 3 == 0 || i % 4)
+		if (i % 3 == 0 || i % 5)
 			myfree(ptr[i]);
 		i++;
 	}

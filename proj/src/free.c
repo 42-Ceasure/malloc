@@ -23,9 +23,9 @@ void	myfree(void *user_ptr)
 		return ;
 	set_chunk(user_ptr, get_chunk_size(user_ptr), CHUNK_FREE);
 	tmp = next_chunk(user_ptr);
-	if (tmp && !is_chunk_free(tmp))
+	if (tmp && !is_chunk_used(tmp))
 		merge_chunks(user_ptr, tmp, CHUNK_FREE);
 	tmp = prev_chunk(user_ptr);
-	if (tmp && !is_chunk_free(tmp))
+	if (tmp && !is_chunk_used(tmp))
 		merge_chunks(tmp, user_ptr, CHUNK_FREE);
 }

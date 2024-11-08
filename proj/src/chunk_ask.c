@@ -12,7 +12,7 @@
 
 #include <mymalloc.h>
 
-int		is_chunk_free(const void *ptr)
+int		is_chunk_used(const void *ptr)
 {
 	return (*(size_t *)ptr & LSB);
 }

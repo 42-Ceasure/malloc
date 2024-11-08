@@ -30,7 +30,7 @@ void	*mymalloc(size_t user_size)
 	if (user_size < 1 || user_size > USR_USABLE)
 		return (NULL);
 	ptr = heap; // this will be soon given by the system.
-	// I will also need to do something similar to "init heap on that memory"
+	// I will also need to do something similar to "init_heap" on that memory
 	size = set_chunk_size(user_size);
 	ptr = find_ffit_chunk(ptr, size);
 	if (ptr == NULL)
