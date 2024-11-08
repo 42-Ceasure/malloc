@@ -12,31 +12,31 @@
 
 #include <mymalloc.h>
 
-size_t	set_chunk_size(const size_t size)
+size_t	set_chunk_size(const size_t user_size)
 {
 	size_t	padding;
 
-	padding = (ALIGNMENT - (size % ALIGNMENT));
+	padding = (ALIGNMENT - (user_size % ALIGNMENT));
 	if (padding == ALIGNMENT)
 		padding = 0;
-	return (size + padding + DATA_SIZE);
+	return (user_size + padding + DATA_SIZE);
 }
 
-void	*mymalloc(size_t usr_size)
+void	*mymalloc(size_t user_size)
 {
 	void	*ptr;
-	size_t	chunk_size;
+	size_t	size;
 
-	if (usr_size < 1 || usr_size > USR_USABLE)
+	if (user_size < 1 || user_size > USR_USABLE)
 		return (NULL);
 	ptr = heap; // this will be soon given by the system.
 	// I will also need to do something similar to "init heap on that memory"
-	chunk_size = set_chunk_size(usr_size);
-	ptr = find_ffit_chunk(ptr, chunk_size);
+	size = set_chunk_size(user_size);
+	ptr = find_ffit_chunk(ptr, size);
 	if (ptr == NULL)
 		return (NULL);
-	if (get_chunk_size(ptr) != chunk_size)
-		split_chunk(ptr, chunk_size);
-	set_chunk(ptr, chunk_size, CHUNK_USED);
+	if (get_chunk_size(ptr) != size)
+		split_chunk(ptr, size);
+	set_chunk(ptr, size, CHUNK_USED);
 	return (usrptr_from_chunk(ptr));
 }

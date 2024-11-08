@@ -1,0 +1,24 @@
+to do :
+
+find
+- implement find next fit
+- implement find last fit
+- implement find best fit
+- implement find ...
+
+move
+- implement move to next free chunk
+- implement wormhole pointer in freed chunks
+- implement fast move to next free chunk based on wormhole
+
+page concept
+- implement page concept
+- use page concept
+
+mmap
+- understand mmap
+- implement usage of mmap
+- understand munmap
+- implement usage of munmap
+
+...

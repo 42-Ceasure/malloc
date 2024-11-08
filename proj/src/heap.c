@@ -39,12 +39,12 @@ void	dump_heap(void)
 	}
 }
 
-void	dump_chunk(void *chunk)
+void	dump_chunk(void *ptr)
 {
-	if (chunk)
+	if (ptr)
 	{
-		printf("address:%p,", chunk);
-		printf("used:%d,", is_chunk_free(chunk));
-		printf("size:%zu\n", get_chunk_size(chunk));
+		printf("address:%p,", ptr);
+		printf("used:%d,", is_chunk_free(ptr));
+		printf("size:%zu\n", get_chunk_size(ptr));
 	}
 }

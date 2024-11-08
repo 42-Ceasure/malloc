@@ -34,14 +34,14 @@
 
 extern char heap[HEAP_MAX];
 
-void	*mymalloc(size_t size);
-size_t	set_chunk_size(const size_t size);
+void	*mymalloc(size_t user_size);
+size_t	set_chunk_size(const size_t user_size);
 
-void	myfree(void *ptr);
+void	myfree(void *user_ptr);
 
 void	init_heap(void);
 void	dump_heap(void);
-void	dump_chunk(void *chunk);
+void	dump_chunk(void *ptr);
 
 void	*find_ffit_chunk(void *ptr, const size_t size);
 
@@ -49,7 +49,7 @@ int		is_chunk_free(const void *ptr);
 size_t	get_chunk_size(const void *ptr);
 void	*prev_chunk(void *ptr);
 void	*next_chunk(void *ptr);
-void	*chunk_from_usrptr(void *ptr);
+void	*chunk_from_usrptr(void *user_ptr);
 void	*usrptr_from_chunk(void *ptr);
 
 void	set_header(size_t *ptr, const size_t size, const size_t used);
