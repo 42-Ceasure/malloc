@@ -1,24 +1,51 @@
-to do :
+what is this project ?
 
-find
-- implement find next fit
-- implement find last fit
-- implement find best fit
-- implement find ...
+	This is a project from school, the goal is to implement malloc.
+	There was no language requirements, but that sound legit for me
+	to implement it in C.
 
-move
-- implement move to next free chunk
-- implement wormhole pointer in freed chunks
-- implement fast move to next free chunk based on wormhole
+For moment, it is based on a hard coded "heap".
 
-page concept
-- implement page concept
-- use page concept
+"heap"
+	is initialised with an 8 byte header and an 8 bytes
+	footer which represents a size_t of 8 bytes.
+	The number is multiple of 16 and so the 57 most signifiant bits
+	represent the size of the chunk, while the 1 less signifiant bits 
+	represents the status (used or free) of the chunck
 
-mmap
-- understand mmap
-- implement usage of mmap
-- understand munmap
-- implement usage of munmap
+"mymalloc"
+	allocate requested memory on the "heap"
+	it searches for a large enough free chunk set its header and
+	footer, and split the chunk if it's size exceed the required size
 
-...
+"myfree"
+	dealocate the chunck and merge it with the next chunk if it's
+	free, then do the same with the previous chunk
+
+"dump_heap"
+	prints the actual state of the heap, listing chunks.
+
+to do next:
+
+	find
+	- implement find next fit
+	- implement find last fit
+	- implement find best fit
+	- implement find ...
+
+	move
+	- implement move to next free chunk
+	- implement wormhole pointer in freed chunks
+	- implement fast move to next free chunk based on wormhole
+
+	page concept
+	- implement page concept
+	- use page concept
+
+	mmap
+	- understand mmap
+	- implement usage of mmap
+	- understand munmap
+	- implement usage of munmap
+
+	...
