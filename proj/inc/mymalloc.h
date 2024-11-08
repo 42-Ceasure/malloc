@@ -16,37 +16,46 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# define ALIGNMENT		16
+# define ALIGNMENT		(16)
 
-# define HEAD_SIZE		8
-# define FOOT_SIZE	HEAD_SIZE
+# define HEAD_SIZE		(8)
+# define FOOT_SIZE		(HEAD_SIZE)
+# define DATA_SIZE		(HEAD_SIZE + FOOT_SIZE)
 
-# define CHUNK_USED		1
-# define CHUNK_FREE		0
+# define CHUNK_USED		(1)
+# define CHUNK_FREE		(0)
 
-# define LSB			0x00000001
-# define NBR			0xFFFFFFF8
+# define LSB			(0x00000001)
+# define NBR			(0xFFFFFFF8)
 
-# define HEAP_MAX		1024 * 8
-# define MAX_USABLE		HEAP_MAX - (HEAD_SIZE + FOOT_SIZE)
+# define HEAP_MAX		(1024 * 8)
+# define MAX_USABLE		(HEAP_MAX - DATA_SIZE)
+# define USR_USABLE		(MAX_USABLE - DATA_SIZE)
 
 extern char heap[HEAP_MAX];
 
-typedef struct	s_chunk
-{
-	size_t	*ptr;
-	size_t	size;
-}				t_chunk;
+void	*mymalloc(size_t size);
+size_t	set_chunk_size(const size_t size);
+
+void	myfree(void *ptr);
 
 void	init_heap(void);
 void	dump_heap(void);
-void	*mymalloc(size_t size);
-void	*find_ffit_chunk(size_t *ptr, size_t size);
-void	*next_chunk(char *ptr);
-size_t	get_chunk_size(size_t *ptr);
-int		is_chunk_free(size_t *ptr);
-void	split_chunk(size_t *ptr, size_t size);
-void	*create_block(size_t *ptr, size_t size, size_t used);
+void	dump_chunk(void *chunk);
 
+void	*find_ffit_chunk(void *ptr, const size_t size);
+
+int		is_chunk_free(const void *ptr);
+size_t	get_chunk_size(const void *ptr);
+void	*prev_chunk(void *ptr);
+void	*next_chunk(void *ptr);
+void	*chunk_from_usrptr(void *ptr);
+void	*usrptr_from_chunk(void *ptr);
+
+void	set_header(size_t *ptr, const size_t size, const size_t used);
+void	set_footer(void *ptr, const size_t size, const size_t used);
+void	set_chunk(void *ptr, const size_t size, const size_t used);
+void	merge_chunks(void *ptr1, void *ptr2, const size_t used);
+void	split_chunk(void *ptr, const size_t size);
 
 #endif

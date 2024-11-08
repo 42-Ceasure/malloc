@@ -12,39 +12,38 @@
 
 #include <mymalloc.h>
 
-char	heap[HEAP_MAX] = {'0'};
-
-void	init_heap(void)
+int		is_chunk_free(const void *ptr)
 {
-	void	*i;
-
-	// maybe init with size of memory to get rid of MAX_USABLE
-	i = heap;
-	set_chunk(i, MAX_USABLE, CHUNK_FREE);
-	i = heap + MAX_USABLE;
-	set_chunk(i, 0, CHUNK_FREE);
+	return (*(size_t *)ptr & LSB);
 }
 
-void	dump_heap(void)
+size_t	get_chunk_size(const void *ptr)
 {
-	void	*ptr;
-
-	ptr = heap; // as for mymalloc, this will be soon given by the system.
-	// I will need to think passing area to that function
-	printf("heap state :\n");
-	while (ptr)
-	{
-		dump_chunk(ptr);
-		ptr = next_chunk(ptr);
-	}
+	return (*(size_t *)ptr & NBR);
 }
 
-void	dump_chunk(void *chunk)
+void	*prev_chunk(void *ptr)
 {
-	if (chunk)
-	{
-		printf("address:%p,", chunk);
-		printf("used:%d,", is_chunk_free(chunk));
-		printf("size:%zu\n", get_chunk_size(chunk));
-	}
+	ptr = ptr - (*(size_t *)(ptr - FOOT_SIZE) & NBR);
+	if (ptr < (void *)heap)
+		return (NULL);
+	return (ptr);
+}
+
+void	*next_chunk(void *ptr)
+{
+	ptr = ptr + (*(size_t *)ptr & NBR);
+	if (!get_chunk_size(ptr))
+		return (NULL);
+	return (ptr);
+}
+
+void	*chunk_from_usrptr(void *ptr)
+{
+	return (ptr - HEAD_SIZE);
+}
+
+void	*usrptr_from_chunk(void *ptr)
+{
+	return (ptr + HEAD_SIZE);
 }

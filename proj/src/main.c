@@ -16,13 +16,21 @@
 int main(int ac, char **av)
 {
 	init_heap();
-	char	*ptr[TEST];
+	void	*ptr[TEST];
 	size_t	i = 0;
 
+	printf("max allocable : %d\n", USR_USABLE);
 	dump_heap();
 	while (i < TEST)
 	{
 		ptr[i] = mymalloc(i * 7);
+		i++;
+	}
+	i = 0;
+	while (i < TEST)
+	{
+		if (i % 3 == 0 || i % 4)
+			myfree(ptr[i]);
 		i++;
 	}
 	dump_heap();

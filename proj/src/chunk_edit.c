@@ -12,23 +12,28 @@
 
 #include <mymalloc.h>
 
-void	*next_chunk(char *ptr)
+void	set_header(size_t *ptr, const size_t size, const size_t used)
 {
-	t_chunk chunk;
-
-	chunk.ptr = (size_t *)ptr;
-	chunk.size = *chunk.ptr & NBR;
-	return (ptr + chunk.size);
+	*ptr = size + used;
 }
 
-void	*find_ffit_chunk(size_t *ptr, size_t size)
+void	set_footer(void *ptr, const size_t size, const size_t used)
 {
-	ptr = (size_t *)heap;
-	while (get_chunk_size(ptr))
-	{
-		if (!is_chunk_free(ptr) && get_chunk_size(ptr) >= size)
-			return (ptr);
-		ptr = next_chunk((char *)ptr);
-	}
-	return (NULL);
+	set_header(ptr + size - FOOT_SIZE, size, used);
+}
+
+void	set_chunk(void *ptr, const size_t size, const size_t used)
+{
+	set_header(ptr, size, used);
+	set_footer(ptr, size, used);
+}
+
+void	merge_chunks(void *ptr1, void *ptr2, const size_t used)
+{
+	set_chunk(ptr1, (get_chunk_size(ptr1) + get_chunk_size(ptr2)), used);
+}
+
+void	split_chunk(void *ptr, const size_t size)
+{
+	set_chunk(ptr + size, (get_chunk_size(ptr) - size), CHUNK_FREE);
 }

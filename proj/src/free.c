@@ -12,39 +12,20 @@
 
 #include <mymalloc.h>
 
-char	heap[HEAP_MAX] = {'0'};
-
-void	init_heap(void)
+void	myfree(void *ptr)
 {
-	void	*i;
+	void	*tmp;
 
-	// maybe init with size of memory to get rid of MAX_USABLE
-	i = heap;
-	set_chunk(i, MAX_USABLE, CHUNK_FREE);
-	i = heap + MAX_USABLE;
-	set_chunk(i, 0, CHUNK_FREE);
-}
-
-void	dump_heap(void)
-{
-	void	*ptr;
-
-	ptr = heap; // as for mymalloc, this will be soon given by the system.
-	// I will need to think passing area to that function
-	printf("heap state :\n");
-	while (ptr)
-	{
-		dump_chunk(ptr);
-		ptr = next_chunk(ptr);
-	}
-}
-
-void	dump_chunk(void *chunk)
-{
-	if (chunk)
-	{
-		printf("address:%p,", chunk);
-		printf("used:%d,", is_chunk_free(chunk));
-		printf("size:%zu\n", get_chunk_size(chunk));
-	}
+	if (ptr == NULL || (size_t)ptr % 8 != 0)
+		return ;
+	ptr = chunk_from_usrptr(ptr);
+	if (ptr < (void *)heap || ptr > (void *)heap + USR_USABLE)
+		return ;
+	set_chunk(ptr, get_chunk_size(ptr), CHUNK_FREE);
+	tmp = next_chunk(ptr);
+	if (tmp && !is_chunk_free(tmp))
+		merge_chunks(ptr, tmp, CHUNK_FREE);
+	tmp = prev_chunk(ptr);
+	if (tmp && !is_chunk_free(tmp))
+		merge_chunks(tmp, ptr, CHUNK_FREE);
 }

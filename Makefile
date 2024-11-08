@@ -14,8 +14,8 @@ OBJDIR		=	./obj/
 
 # libasm
 NAME		=	mymalloc
-SRC			=	malloc.c	findchunk.c	chunk.c \
-				main.c		heap.c
+SRC			=	malloc.c	chunk_find.c	chunk_ask.c		chunk_edit.c \
+				free.c		main.c			heap.c
 OBJ			=	$(SRC:.c=.o)
 SRCDIR		=	./proj/src/
 INCDIR		=	./proj/inc/
