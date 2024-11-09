@@ -38,5 +38,6 @@ void	*mymalloc(size_t user_size)
 	if (get_chunk_size(ptr) != size)
 		split_chunk(ptr, size);
 	set_chunk(ptr, size, CHUNK_USED);
+	set_wormhole(prev_free_chunk(ptr), next_free_chunk(ptr));
 	return (usrptr_from_chunk(ptr));
 }

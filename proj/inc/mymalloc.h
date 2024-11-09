@@ -32,12 +32,12 @@
 # define MAX_USABLE		(HEAP_MAX - DATA_SIZE)
 # define USR_USABLE		(MAX_USABLE - DATA_SIZE)
 
-extern char heap[HEAP_MAX];
+extern void *const heap;
 
 void	*mymalloc(size_t user_size);
 size_t	set_chunk_size(const size_t user_size);
 
-void	myfree(void *user_ptr);
+void	myfree(void *ptr);
 
 void	init_heap(void);
 void	dump_heap(void);
@@ -48,7 +48,10 @@ void	*find_ffit_chunk(void *ptr, const size_t size);
 
 int		is_chunk_used(const void *ptr);
 size_t	get_chunk_size(const void *ptr);
+void	*prev_free_chunk(void *ptr);
 void	*prev_chunk(void *ptr);
+void	*jump_next_free_chunk(void *ptr);
+void	*next_free_chunk(void *ptr);
 void	*next_chunk(void *ptr);
 void	*chunk_from_usrptr(void *user_ptr);
 void	*usrptr_from_chunk(void *ptr);
@@ -56,7 +59,9 @@ void	*usrptr_from_chunk(void *ptr);
 void	set_header(size_t *ptr, const size_t size, const size_t status);
 void	set_footer(void *ptr, const size_t size, const size_t status);
 void	set_chunk(void *ptr, const size_t size, const size_t status);
-void	merge_chunks(void *ptr1, void *ptr2, const size_t status);
+void	*merge_chunks(void *ptr1, void *ptr2, const size_t status);
 void	split_chunk(void *ptr, const size_t size);
+void	set_wormhole(void *ptr1, void *ptr2);
+void	set_fast_speed(void *ptr);
 
 #endif

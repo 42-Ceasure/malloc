@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <mymalloc.h>
-#define TEST 40
+#define TEST 20
 
 int main(int ac, char **av)
 {
@@ -23,13 +23,13 @@ int main(int ac, char **av)
 	dump_heap();
 	while (i < TEST)
 	{
-		ptr[i] = mymalloc(i * 7);
+		ptr[i] = mymalloc(i);
 		i++;
 	}
 	i = 0;
 	while (i < TEST)
 	{
-		if (i % 3 == 0 || i % 5)
+		if (i % 2 == 0)
 			myfree(ptr[i]);
 		i++;
 	}

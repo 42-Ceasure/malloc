@@ -22,11 +22,44 @@ size_t	get_chunk_size(const void *ptr)
 	return (*(size_t *)ptr & NBR);
 }
 
+void	*prev_free_chunk(void *ptr)
+{
+	do
+	{
+		ptr = prev_chunk(ptr);
+		if (ptr ==  NULL)
+			return (ptr);
+	}
+	while (is_chunk_used(ptr)); 
+	return (ptr);
+}
+
 void	*prev_chunk(void *ptr)
 {
 	ptr = ptr - (*(size_t *)(ptr - FOOT_SIZE) & NBR);
-	if (ptr < (void *)heap)
+	if (ptr < heap)
 		return (NULL);
+	return (ptr);
+}
+
+void	*jump_next_free_chunk(void *ptr)
+{
+	if (is_chunk_used(ptr))
+		ptr = next_free_chunk(ptr);
+	else
+		ptr = next_chunk(usrptr_from_chunk(ptr)); 
+	return (ptr);
+}
+
+void	*next_free_chunk(void *ptr)
+{
+	do
+	{
+		ptr = next_chunk(ptr);
+		if (ptr ==  NULL)
+			return (ptr);
+	}
+	while (is_chunk_used(ptr)); 
 	return (ptr);
 }
 

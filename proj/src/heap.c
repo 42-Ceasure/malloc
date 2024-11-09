@@ -12,17 +12,14 @@
 
 #include <mymalloc.h>
 
-char	heap[HEAP_MAX] = {'0'};
+char heap_area[HEAP_MAX] = {'0'};
+void *const	heap = heap_area;
 
 void	init_heap(void)
 {
-	void	*i;
-
-	// maybe init with size of memory to get rid of MAX_USABLE
-	i = heap;
-	set_chunk(i, MAX_USABLE, CHUNK_FREE);
-	i = heap + MAX_USABLE;
-	set_chunk(i, 0, CHUNK_FREE);
+	set_chunk(heap, MAX_USABLE, CHUNK_FREE);
+	set_chunk(heap + MAX_USABLE, 0, CHUNK_FREE);
+	set_wormhole(heap, heap + MAX_USABLE);
 }
 
 void	dump_heap(void)
@@ -56,6 +53,8 @@ void	dump_chunk_datas(void *ptr)
 		return ;
 	byte = usrptr_from_chunk(ptr);
 	printf("%zu,", size);
+	if (!is_chunk_used(ptr))
+		printf("%zu,", get_chunk_size(byte));
 	while (i < size - DATA_SIZE)
 		dump_byte(byte[i++]);
 	printf(",%zu\n", size);

@@ -18,7 +18,7 @@ void	*find_ffit_chunk(void *ptr, const size_t size)
 	{
 		if (!is_chunk_used(ptr) && get_chunk_size(ptr) >= size)
 			return (ptr);
-		ptr = next_chunk(ptr);
+		ptr = jump_next_free_chunk(ptr);
 	}
 	return (NULL);
 }

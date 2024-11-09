@@ -12,20 +12,21 @@
 
 #include <mymalloc.h>
 
-void	myfree(void *user_ptr)
+void	myfree(void *ptr)
 {
 	void	*tmp;
 
-	if (user_ptr == NULL || (size_t)user_ptr % 8 != 0)
+	if ((ptr == NULL) || ((size_t)ptr % 8 != 0))
 		return ;
-	user_ptr = chunk_from_usrptr(user_ptr);
-	if (user_ptr < (void *)heap || user_ptr > (void *)heap + USR_USABLE)
+	ptr = chunk_from_usrptr(ptr);
+	if ((ptr < heap) || (ptr > heap + USR_USABLE))
 		return ;
-	set_chunk(user_ptr, get_chunk_size(user_ptr), CHUNK_FREE);
-	tmp = next_chunk(user_ptr);
-	if (tmp && !is_chunk_used(tmp))
-		merge_chunks(user_ptr, tmp, CHUNK_FREE);
-	tmp = prev_chunk(user_ptr);
-	if (tmp && !is_chunk_used(tmp))
-		merge_chunks(tmp, user_ptr, CHUNK_FREE);
+	set_chunk(ptr, get_chunk_size(ptr), CHUNK_FREE);
+	tmp = next_chunk(ptr);
+	if ((tmp) && (!is_chunk_used(tmp)))
+		merge_chunks(ptr, tmp, CHUNK_FREE);
+	tmp = prev_chunk(ptr);
+	if ((tmp) && (!is_chunk_used(tmp)))
+		ptr = merge_chunks(tmp, ptr, CHUNK_FREE);
+	set_fast_speed(ptr);
 }

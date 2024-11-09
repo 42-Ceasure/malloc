@@ -34,9 +34,7 @@ to do next:
 	- implement find ...
 
 	move
-	- implement move to next free chunk
-	- implement wormhole pointer in freed chunks
-	- implement fast move to next free chunk based on wormhole
+	- rebuild file architecture
 
 	page concept
 	- implement page concept

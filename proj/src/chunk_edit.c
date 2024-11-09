@@ -28,12 +28,28 @@ void	set_chunk(void *ptr, const size_t size, const size_t status)
 	set_footer(ptr, size, status);
 }
 
-void	merge_chunks(void *ptr1, void *ptr2, const size_t status)
+void	*merge_chunks(void *ptr1, void *ptr2, const size_t status)
 {
 	set_chunk(ptr1, (get_chunk_size(ptr1) + get_chunk_size(ptr2)), status);
+	return (ptr1);
 }
 
 void	split_chunk(void *ptr, const size_t size)
 {
 	set_chunk(ptr + size, (get_chunk_size(ptr) - size), CHUNK_FREE);
+}
+
+void	set_wormhole(void *ptr1, void *ptr2)
+{
+	if (ptr1 == NULL || ptr2 == NULL)
+		return ;
+	if (is_chunk_used(ptr1) && is_chunk_used(ptr2))
+		return ;
+	set_header(usrptr_from_chunk(ptr1), (size_t)(ptr2 - ptr1), CHUNK_FREE);
+}
+
+void	set_fast_speed(void *ptr)
+{
+	set_wormhole(ptr, next_free_chunk(ptr));
+	set_wormhole(prev_free_chunk(ptr), ptr);
 }
