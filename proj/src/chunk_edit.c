@@ -41,11 +41,13 @@ void	split_chunk(void *ptr, const size_t size)
 
 void	set_wormhole(void *ptr1, void *ptr2)
 {
+	void	*tmp;
+
 	if (ptr1 == NULL || ptr2 == NULL)
 		return ;
-	if (is_chunk_used(ptr1) && is_chunk_used(ptr2))
-		return ;
 	set_header(usrptr_from_chunk(ptr1), (size_t)(ptr2 - ptr1), CHUNK_FREE);
+	tmp = ptr2 + get_chunk_size(ptr2) - (2 * FOOT_SIZE);
+	set_header(tmp, (size_t)(ptr2 - ptr1), CHUNK_FREE);
 }
 
 void	set_fast_speed(void *ptr)

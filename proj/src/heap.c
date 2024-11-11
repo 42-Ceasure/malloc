@@ -18,8 +18,10 @@ void *const	heap = heap_area;
 void	init_heap(void)
 {
 	set_chunk(heap, MAX_USABLE, CHUNK_FREE);
-	set_chunk(heap + MAX_USABLE, 0, CHUNK_FREE);
+	set_header(heap + MAX_USABLE, 0, CHUNK_FREE);
+	set_header(heap + MAX_USABLE + HEAD_SIZE, 0, CHUNK_FREE);
 	set_wormhole(heap, heap + MAX_USABLE);
+	
 }
 
 void	dump_heap(void)
@@ -36,28 +38,16 @@ void	dump_heap(void)
 	}
 }
 
-void	dump_byte(char byte)
-{
-	printf("%x%x", ((byte & 0xF0) >> 4), ((byte & 0x0F) >> 4));
-}
-
 void	dump_chunk_datas(void *ptr)
 {
-	size_t	i;
 	size_t	size;
-	char	*byte;
+	size_t	*byte;
 
-	i = 0;
 	size = get_chunk_size(ptr);
-	if (size > 256)
-		return ;
-	byte = usrptr_from_chunk(ptr);
-	printf("%zu,", size);
-	if (!is_chunk_used(ptr))
-		printf("%zu,", get_chunk_size(byte));
-	while (i < size - DATA_SIZE)
-		dump_byte(byte[i++]);
-	printf(",%zu\n", size);
+	byte = ptr;
+	while ((void *)byte < ptr + size - sizeof(size_t))
+		printf("%zu,", *byte++);
+	printf("%zu\n", *byte);
 }
 
 void	dump_chunk(void *ptr)
@@ -65,9 +55,11 @@ void	dump_chunk(void *ptr)
 	if (ptr)
 	{
 		printf("chunkptr:%p,", ptr);
-		printf("usrptr:%p,", usrptr_from_chunk(ptr));
+		if (is_chunk_used(ptr))
+			printf("usrptr:%p,", usrptr_from_chunk(ptr));
 		printf("status:%s,", is_chunk_used(ptr) == 1 ? "USED" : "FREE");
 		printf("size:%zu\n", get_chunk_size(ptr));
-		// dump_chunk_datas(ptr);
+		// if (get_chunk_size(ptr) < 512 && !is_chunk_used(ptr))
+		// 	dump_chunk_datas(ptr);
 	}
 }

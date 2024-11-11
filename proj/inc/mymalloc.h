@@ -45,16 +45,20 @@ void	dump_chunk_datas(void *ptr);
 void	dump_chunk(void *ptr);
 
 void	*find_ffit_chunk(void *ptr, const size_t size);
+void	*find_lfit_chunk(void *ptr, const size_t size);
 
 int		is_chunk_used(const void *ptr);
 size_t	get_chunk_size(const void *ptr);
+void	*chunk_from_usrptr(void *user_ptr);
+void	*usrptr_from_chunk(void *ptr);
+
+void	*jump_prev_free_chunk(void *ptr);
 void	*prev_free_chunk(void *ptr);
 void	*prev_chunk(void *ptr);
+
 void	*jump_next_free_chunk(void *ptr);
 void	*next_free_chunk(void *ptr);
 void	*next_chunk(void *ptr);
-void	*chunk_from_usrptr(void *user_ptr);
-void	*usrptr_from_chunk(void *ptr);
 
 void	set_header(size_t *ptr, const size_t size, const size_t status);
 void	set_footer(void *ptr, const size_t size, const size_t status);
