@@ -26,6 +26,14 @@ For moment, it is based on a hard coded "heap".
 	prints the actual state of the heap, listing chunks.
 
 to do next:
+	regler pb de chunk 16 residuels,
+	solution eventuelle : 2 int au lieu d'un size_t, set chunk uniquement
+	apres merge
+						ou aligner sur  32 ?
+	check free en passant la liste ?
+
+	free:
+	- add user pointer checking method
 
 	find
 	- implement find next fit

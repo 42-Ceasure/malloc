@@ -11,7 +11,18 @@
 /* ************************************************************************** */
 
 #include <mymalloc.h>
-
+// void	*jump_next_free_chunk(void *ptr)
+// {
+// 	if (is_chunk_used(ptr))
+// 		ptr = next_free_chunk(ptr);
+// 	else
+// 	{
+// 		if (!get_chunk_size(ptr) || !get_chunk_size(ptr + HEAD_SIZE))
+// 			return (NULL);
+// 		ptr = ptr + get_chunk_size(ptr + HEAD_SIZE);
+// 	}
+// 	return (ptr);
+// }
 void	*jump_prev_free_chunk(void *ptr)
 {
 	if (is_chunk_used(ptr) || get_chunk_size(ptr) == 0)
@@ -33,14 +44,14 @@ void	*prev_free_chunk(void *ptr)
 		if (ptr ==  NULL)
 			return (ptr);
 	}
-	while (is_chunk_used(ptr)); 
+	while (is_chunk_used(ptr));
 	return (ptr);
 }
 
 void	*prev_chunk(void *ptr)
 {
-	ptr = ptr - (*(size_t *)(ptr - FOOT_SIZE) & NBR);
-	if (ptr < heap)
+	if (ptr == heap)
 		return (NULL);
+	ptr = ptr - (*(size_t *)(ptr - FOOT_SIZE) & NBR);
 	return (ptr);
 }

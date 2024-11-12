@@ -21,6 +21,7 @@
 # define HEAD_SIZE		(8)
 # define FOOT_SIZE		(HEAD_SIZE)
 # define DATA_SIZE		(HEAD_SIZE + FOOT_SIZE)
+# define END_CHUNK		(DATA_SIZE + ALIGNMENT)
 
 # define CHUNK_USED		(1)
 # define CHUNK_FREE		(0)
@@ -29,7 +30,7 @@
 # define NBR			(0xFFFFFFF8)
 
 # define HEAP_MAX		(1024 * 8)
-# define MAX_USABLE		(HEAP_MAX - DATA_SIZE)
+# define MAX_USABLE		(HEAP_MAX - END_CHUNK)
 # define USR_USABLE		(MAX_USABLE - DATA_SIZE)
 
 extern void *const heap;
@@ -60,12 +61,11 @@ void	*jump_next_free_chunk(void *ptr);
 void	*next_free_chunk(void *ptr);
 void	*next_chunk(void *ptr);
 
-void	set_header(size_t *ptr, const size_t size, const size_t status);
-void	set_footer(void *ptr, const size_t size, const size_t status);
-void	set_chunk(void *ptr, const size_t size, const size_t status);
-void	*merge_chunks(void *ptr1, void *ptr2, const size_t status);
-void	split_chunk(void *ptr, const size_t size);
-void	set_wormhole(void *ptr1, void *ptr2);
-void	set_fast_speed(void *ptr);
+void	set_header(void *const ptr, const size_t size, const size_t status);
+void	set_footer(void *const ptr, const size_t size, const size_t status);
+void	set_chunk(void *const ptr, const size_t size, const size_t status);
+void	*merge_chunks(void *const ptr1, void *ptr2, const size_t status);
+void	split_chunk(void *const ptr, const size_t size);
+void	set_wormhole(void *const ptr1, void *const ptr2);
 
 #endif

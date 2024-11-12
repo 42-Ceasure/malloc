@@ -19,9 +19,8 @@ void	init_heap(void)
 {
 	set_chunk(heap, MAX_USABLE, CHUNK_FREE);
 	set_header(heap + MAX_USABLE, 0, CHUNK_FREE);
-	set_header(heap + MAX_USABLE + HEAD_SIZE, 0, CHUNK_FREE);
+	set_footer(heap + MAX_USABLE + END_CHUNK, 0, CHUNK_FREE);
 	set_wormhole(heap, heap + MAX_USABLE);
-	
 }
 
 void	dump_heap(void)
@@ -31,11 +30,14 @@ void	dump_heap(void)
 	ptr = heap; // as for mymalloc, this will be soon given by the system.
 	// I will need to think passing area to that function
 	printf("heap state :\n");
-	while (ptr)
+	printf("------------------------\n");
+	while (get_chunk_size(ptr))
 	{
 		dump_chunk(ptr);
 		ptr = next_chunk(ptr);
 	}
+	dump_chunk(ptr);
+	printf("------------------------\n");
 }
 
 void	dump_chunk_datas(void *ptr)
@@ -44,10 +46,15 @@ void	dump_chunk_datas(void *ptr)
 	size_t	*byte;
 
 	size = get_chunk_size(ptr);
+	if (size == 0)
+		size = 32;
 	byte = ptr;
-	while ((void *)byte < ptr + size - sizeof(size_t))
+	while ((void *)byte < ptr + DATA_SIZE)
 		printf("%zu,", *byte++);
-	printf("%zu\n", *byte);
+	byte = ptr + size - DATA_SIZE;
+	while ((void *)byte < ptr + size)
+		printf("%zu,", *byte++);
+	printf("\n");
 }
 
 void	dump_chunk(void *ptr)
@@ -59,7 +66,7 @@ void	dump_chunk(void *ptr)
 			printf("usrptr:%p,", usrptr_from_chunk(ptr));
 		printf("status:%s,", is_chunk_used(ptr) == 1 ? "USED" : "FREE");
 		printf("size:%zu\n", get_chunk_size(ptr));
-		// if (get_chunk_size(ptr) < 512 && !is_chunk_used(ptr))
-		// 	dump_chunk_datas(ptr);
+		if (!is_chunk_used(ptr))
+			dump_chunk_datas(ptr);
 	}
 }

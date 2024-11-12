@@ -12,46 +12,69 @@
 
 #include <mymalloc.h>
 
-void	set_header(size_t *ptr, const size_t size, const size_t status)
+void	set_micro_data(size_t *const ptr, const size_t data)
 {
-	*ptr = size + status;
+	*ptr = data;
 }
 
-void	set_footer(void *ptr, const size_t size, const size_t status)
+void	set_header(void *const ptr, const size_t size, const size_t status)
 {
-	set_header(ptr + size - FOOT_SIZE, size, status);
+	set_micro_data(ptr, size + status);
 }
 
-void	set_chunk(void *ptr, const size_t size, const size_t status)
+void	set_footer(void *const ptr, const size_t size, const size_t status)
+{
+	set_micro_data(ptr + size - FOOT_SIZE, size + status);
+}
+
+void	set_head_ptr(void *const ptr, const size_t size)
+{
+	if (size > DATA_SIZE)
+		set_micro_data(ptr + HEAD_SIZE, size);
+}
+
+void	set_foot_ptr(void *const ptr,  size_t size)
+{
+	size_t	shift;
+
+	shift = get_chunk_size(ptr);
+	if (shift == 0)
+		shift = END_CHUNK;
+	if (size > DATA_SIZE)
+		set_micro_data((ptr + shift - FOOT_SIZE - FOOT_SIZE), size);
+}
+
+void	set_chunk(void *const ptr, const size_t size, const size_t status)
 {
 	set_header(ptr, size, status);
 	set_footer(ptr, size, status);
 }
 
-void	*merge_chunks(void *ptr1, void *ptr2, const size_t status)
+void	set_wormhole(void *const ptr1, void *const ptr2)
+{
+	size_t	size;
+
+	if (ptr1 == NULL)
+	{
+		set_foot_ptr(ptr2, 0);
+		return ;
+	}
+	if (ptr1 == ptr2)
+		size = (get_chunk_size(ptr1));
+	else
+		size = ptr2 - ptr1;
+	set_head_ptr(ptr1, size);
+	set_foot_ptr(ptr2, size);
+}
+
+void	*merge_chunks(void *const ptr1, void *const ptr2, const size_t status)
 {
 	set_chunk(ptr1, (get_chunk_size(ptr1) + get_chunk_size(ptr2)), status);
 	return (ptr1);
 }
 
-void	split_chunk(void *ptr, const size_t size)
+void	split_chunk(void *const ptr, const size_t size)
 {
 	set_chunk(ptr + size, (get_chunk_size(ptr) - size), CHUNK_FREE);
-}
-
-void	set_wormhole(void *ptr1, void *ptr2)
-{
-	void	*tmp;
-
-	if (ptr1 == NULL || ptr2 == NULL)
-		return ;
-	set_header(usrptr_from_chunk(ptr1), (size_t)(ptr2 - ptr1), CHUNK_FREE);
-	tmp = ptr2 + get_chunk_size(ptr2) - (2 * FOOT_SIZE);
-	set_header(tmp, (size_t)(ptr2 - ptr1), CHUNK_FREE);
-}
-
-void	set_fast_speed(void *ptr)
-{
-	set_wormhole(ptr, next_free_chunk(ptr));
-	set_wormhole(prev_free_chunk(ptr), ptr);
+	set_wormhole(ptr + size, next_free_chunk(ptr));
 }

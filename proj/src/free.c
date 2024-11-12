@@ -28,5 +28,6 @@ void	myfree(void *ptr)
 	tmp = prev_chunk(ptr);
 	if ((tmp) && (!is_chunk_used(tmp)))
 		ptr = merge_chunks(tmp, ptr, CHUNK_FREE);
-	set_fast_speed(ptr);
+	set_wormhole(ptr, next_free_chunk(ptr));
+	set_wormhole(prev_free_chunk(ptr), ptr);
 }

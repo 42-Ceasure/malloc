@@ -17,18 +17,18 @@ void	*jump_next_free_chunk(void *ptr)
 	if (is_chunk_used(ptr))
 		ptr = next_free_chunk(ptr);
 	else
-		ptr = next_chunk(usrptr_from_chunk(ptr)); 
+	{
+		if (!get_chunk_size(ptr + HEAD_SIZE))
+			return (NULL);
+		ptr = ptr + get_chunk_size(ptr + HEAD_SIZE);
+	}
 	return (ptr);
 }
 
 void	*next_free_chunk(void *ptr)
 {
 	do
-	{
 		ptr = next_chunk(ptr);
-		if (ptr ==  NULL)
-			return (ptr);
-	}
 	while (is_chunk_used(ptr)); 
 	return (ptr);
 }
@@ -36,7 +36,5 @@ void	*next_free_chunk(void *ptr)
 void	*next_chunk(void *ptr)
 {
 	ptr = ptr + (*(size_t *)ptr & NBR);
-	if (!get_chunk_size(ptr))
-		return (NULL);
 	return (ptr);
 }
