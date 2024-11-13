@@ -14,17 +14,20 @@ OBJDIR		=	./obj/
 
 # libasm
 NAME		=	mymalloc
-SRC			=	malloc.c			free.c				heap.c \
-				chunk_find.c		chunk_ask.c			chunk_edit.c \
-				chunk_move_bwd.c	chunk_move_fwd.c \
-				main.c
-OBJ			=	$(SRC:.c=.o)
-SRCDIR		=	./proj/src/
+INC			=	mymalloc.h
 INCDIR		=	./proj/inc/
+INCFIL		=	$(addprefix $(INCDIR), $(INC))
+SRC			=	malloc.c			free.c				realloc.c \
+				chunk_find.c		chunk_ask.c			chunk_edit.c \
+				chunk_move_bwd.c	chunk_move_fwd.c	chunk_worm.c \
+				chunk_manage.c		micro_data.c		heap.c \
+				main.c
+SRCDIR		=	./proj/src/
+OBJ			=	$(SRC:.c=.o)
 OBJFIL		=	$(addprefix $(OBJDIR), $(OBJ))
 
 # test
-SRCT		=	main.c _len.c _cpy.c _cmp.c _write.c _read.c _dup.c
+SRCT		=	main.c
 OBJT		=	$(SRCT:.c=.o)
 SRCDIRT		=	./test/src/
 INCDIRT		=	./test/inc/
@@ -42,7 +45,7 @@ $(TEST)		:	$(OBJFILT) $(NAME)
 				@echo creating $(TEST)
 				@$(CC) $(CFLAG) $^ -o $@
 
-$(OBJDIR)%.o:	$(SRCDIR)%.c
+$(OBJDIR)%.o:	$(SRCDIR)%.c $(INCFIL)
 				@mkdir -p $(OBJDIR)
 				$(CC) $(CFLAG) -I $(INCDIRT) -I $(INCDIR) -o $@ -c $<
 

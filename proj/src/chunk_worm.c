@@ -12,44 +12,34 @@
 
 #include <mymalloc.h>
 
-static void	double_free(void)
+void	set_head_ptr(void *const ptr, const size_t size)
 {
-	printf("free(): double free detected\n");
-	exit(1);
+	set_micro_data(ptr + HEAD_SIZE, size);
 }
 
-static void	invalid_pointer(void)
+void	set_foot_ptr(void *const ptr,  size_t size)
 {
-	printf("myfree(): invalid pointer\n");
-	exit(1);
+	size_t	shift;
+
+	shift = get_chunk_size(ptr);
+	if (shift == 0)
+		shift = END_CHUNK;
+	set_micro_data((ptr + shift - FOOT_SIZE - FOOT_SIZE), size);
 }
 
-void	deallocate(void *ptr)
+void	set_wormhole(void *const ptr1, void *const ptr2)
 {
-	void	*tmp;
+	size_t	size;
 
-	set_chunk(ptr, get_chunk_size(ptr), CHUNK_FREE);
-	tmp = next_chunk(ptr);
-	if ((tmp) && (!is_chunk_used(tmp)))
-		merge_chunks(ptr, tmp, CHUNK_FREE);
-	tmp = prev_chunk(ptr);
-	if ((tmp) && (!is_chunk_used(tmp)))
-		ptr = merge_chunks(tmp, ptr, CHUNK_FREE);
-	set_wormhole(ptr, next_free_chunk(ptr));
-	set_wormhole(prev_free_chunk(ptr), ptr);
-}
-
-void	myfree(void *usr_ptr)
-{
-	void	*ptr;
-
-	if ((usr_ptr != NULL))
+	if (ptr1 == NULL)
 	{
-		ptr = get_user_chunk(usr_ptr);
-		if (ptr == NULL)
-			invalid_pointer();
-		if (!is_chunk_used(ptr))
-			double_free();
-		deallocate(ptr);
+		set_foot_ptr(ptr2, 0);
+		return ;
 	}
+	if (ptr1 == ptr2)
+		size = (get_chunk_size(ptr1));
+	else
+		size = ptr2 - ptr1;
+	set_head_ptr(ptr1, size);
+	set_foot_ptr(ptr2, size);
 }

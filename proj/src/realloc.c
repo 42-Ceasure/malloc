@@ -12,44 +12,25 @@
 
 #include <mymalloc.h>
 
-static void	double_free(void)
+void	*realloc(void *ptr, size_t size)
 {
-	printf("free(): double free detected\n");
-	exit(1);
-}
+	/*
+	
+	check le pointeur,
+		si invalide, return;
+		si NULL, faire un mymalloc(size);
+	check la size,
+		si 0 et ptr non null, faire free(ptr);
+		si size < taille du chunk, free()
+	regarder si le bloc suivant contient size // ptet size - footer ?
+	si oui, split le bloc suivant, creer nouveau bloc, retourner ptr
+	si non, chercher un bloc dispo et suffisamment grand
+	allouer, copier les donnees
+	free le bloc d'origine
+	retourner nouveau ptr
 
-static void	invalid_pointer(void)
-{
-	printf("myfree(): invalid pointer\n");
-	exit(1);
-}
-
-void	deallocate(void *ptr)
-{
-	void	*tmp;
-
-	set_chunk(ptr, get_chunk_size(ptr), CHUNK_FREE);
-	tmp = next_chunk(ptr);
-	if ((tmp) && (!is_chunk_used(tmp)))
-		merge_chunks(ptr, tmp, CHUNK_FREE);
-	tmp = prev_chunk(ptr);
-	if ((tmp) && (!is_chunk_used(tmp)))
-		ptr = merge_chunks(tmp, ptr, CHUNK_FREE);
-	set_wormhole(ptr, next_free_chunk(ptr));
-	set_wormhole(prev_free_chunk(ptr), ptr);
-}
-
-void	myfree(void *usr_ptr)
-{
-	void	*ptr;
-
-	if ((usr_ptr != NULL))
-	{
-		ptr = get_user_chunk(usr_ptr);
-		if (ptr == NULL)
-			invalid_pointer();
-		if (!is_chunk_used(ptr))
-			double_free();
-		deallocate(ptr);
-	}
+	*/
+	(void)ptr; 
+	(void)size;
+	return (NULL);
 }

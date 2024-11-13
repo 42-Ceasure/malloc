@@ -33,7 +33,7 @@ void	*find_lfit_chunk(void *ptr, const size_t size)
 	{
 		if (!is_chunk_used(ptr) && get_chunk_size(ptr) >= size)
 			return (ptr);
-		ptr = prev_free_chunk(ptr);
+		ptr = jump_prev_free_chunk(ptr);
 	}
 	return (NULL);
 }

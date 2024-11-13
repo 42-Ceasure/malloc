@@ -12,44 +12,32 @@
 
 #include <mymalloc.h>
 
-static void	double_free(void)
-{
-	printf("free(): double free detected\n");
-	exit(1);
-}
-
-static void	invalid_pointer(void)
-{
-	printf("myfree(): invalid pointer\n");
-	exit(1);
-}
-
-void	deallocate(void *ptr)
-{
-	void	*tmp;
-
-	set_chunk(ptr, get_chunk_size(ptr), CHUNK_FREE);
-	tmp = next_chunk(ptr);
-	if ((tmp) && (!is_chunk_used(tmp)))
-		merge_chunks(ptr, tmp, CHUNK_FREE);
-	tmp = prev_chunk(ptr);
-	if ((tmp) && (!is_chunk_used(tmp)))
-		ptr = merge_chunks(tmp, ptr, CHUNK_FREE);
-	set_wormhole(ptr, next_free_chunk(ptr));
-	set_wormhole(prev_free_chunk(ptr), ptr);
-}
-
-void	myfree(void *usr_ptr)
+void	*get_user_chunk(void *usr_ptr)
 {
 	void	*ptr;
 
-	if ((usr_ptr != NULL))
+	ptr = heap;
+	while (get_chunk_size(ptr))
 	{
-		ptr = get_user_chunk(usr_ptr);
-		if (ptr == NULL)
-			invalid_pointer();
-		if (!is_chunk_used(ptr))
-			double_free();
-		deallocate(ptr);
+		if (ptr == chkptr_from_usrptr(usr_ptr))
+			return (ptr);
+		ptr = next_chunk(ptr);
 	}
+	return (NULL);
+}
+
+void	*merge_chunks(void *const ptr1, void *const ptr2, const size_t status)
+{
+	set_chunk(ptr1, (get_chunk_size(ptr1) + get_chunk_size(ptr2)), status);
+	return (ptr1);
+}
+
+void	split_chunk(void *const ptr, const size_t size)
+{
+	size_t	new_size;
+
+	new_size = get_chunk_size(ptr) - size;
+	set_chunk(ptr + size, new_size, CHUNK_FREE);
+	if (new_size > DATA_SIZE)
+		set_wormhole(ptr + size, next_free_chunk(ptr));
 }

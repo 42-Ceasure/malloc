@@ -12,22 +12,22 @@
 
 #include <mymalloc.h>
 
-int		is_chunk_used(const void *ptr)
+size_t	is_chunk_used(const void *const ptr)
 {
-	return (*(size_t *)ptr & LSB);
+	return (get_micro_data(ptr) & LSB);
 }
 
-size_t	get_chunk_size(const void *ptr)
+size_t	get_chunk_size(const void *const ptr)
 {
-	return (*(size_t *)ptr & NBR);
+	return (get_micro_data(ptr) & NBR);
 }
 
-void	*chunk_from_usrptr(void *ptr)
+void	*chkptr_from_usrptr(void *ptr)
 {
 	return (ptr - HEAD_SIZE);
 }
 
-void	*usrptr_from_chunk(void *ptr)
+void	*usrptr_from_chkptr(void *ptr)
 {
 	return (ptr + HEAD_SIZE);
 }

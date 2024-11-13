@@ -22,6 +22,14 @@ size_t	set_chunk_size(const size_t user_size)
 	return (user_size + padding + DATA_SIZE);
 }
 
+void	allocate(void *const ptr, const size_t size)
+{
+	if (get_chunk_size(ptr) != size)
+		split_chunk(ptr, size);
+	set_chunk(ptr, size, CHUNK_USED);
+	set_wormhole(prev_free_chunk(ptr), next_free_chunk(ptr));
+}
+
 void	*mymalloc(size_t user_size)
 {
 	void	*ptr;
@@ -35,16 +43,6 @@ void	*mymalloc(size_t user_size)
 	ptr = find_ffit_chunk(ptr, size);
 	if (ptr == NULL)
 		return (NULL);
-	if (get_chunk_size(ptr) != size)
-		split_chunk(ptr, size);
-	// if (get_chunk_size(ptr) != size)
-	// {
-	// 	if (get_chunk_size(ptr) > size + DATA_SIZE)
-	// 		split_chunk(ptr, size);
-	// 	else
-	// 		size += DATA_SIZE;
-	// }
-	set_chunk(ptr, size, CHUNK_USED);
-	set_wormhole(prev_free_chunk(ptr), next_free_chunk(ptr));
-	return (usrptr_from_chunk(ptr));
+	allocate(ptr, size);
+	return (usrptr_from_chkptr(ptr));
 }
