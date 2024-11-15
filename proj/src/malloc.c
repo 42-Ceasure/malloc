@@ -43,6 +43,8 @@ void	*mymalloc(size_t user_size)
 	ptr = find_ffit_chunk(ptr, size);
 	if (ptr == NULL)
 		return (NULL);
+	if (DEBUG)
+		printf("allocating %zu bytes to %p\n", size, ptr);
 	allocate(ptr, size);
 	return (usrptr_from_chkptr(ptr));
 }

@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+# define DEBUG			(1)
+
 # define ALIGNMENT		(2 * sizeof(size_t))
 
 # define HEAD_SIZE		(sizeof(size_t))

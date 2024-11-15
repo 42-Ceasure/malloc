@@ -26,15 +26,11 @@ static void	invalid_pointer(void)
 
 void	deallocate(void *ptr)
 {
-	void	*tmp;
-
 	set_chunk(ptr, get_chunk_size(ptr), CHUNK_FREE);
-	tmp = next_chunk(ptr);
-	if ((tmp) && (!is_chunk_used(tmp)))
-		merge_chunks(ptr, tmp, CHUNK_FREE);
-	tmp = prev_chunk(ptr);
-	if ((tmp) && (!is_chunk_used(tmp)))
-		ptr = merge_chunks(tmp, ptr, CHUNK_FREE);
+	if (get_chunk_size(next_chunk(ptr)) && (!is_chunk_used(next_chunk(ptr))))
+		merge_chunks(ptr, next_chunk(ptr), CHUNK_FREE);
+	if (prev_chunk(ptr) && (!is_chunk_used(prev_chunk(ptr))))
+		ptr = merge_chunks(prev_chunk(ptr), ptr, CHUNK_FREE);
 	set_wormhole(ptr, next_free_chunk(ptr));
 	set_wormhole(prev_free_chunk(ptr), ptr);
 }
@@ -50,6 +46,8 @@ void	myfree(void *usr_ptr)
 			invalid_pointer();
 		if (!is_chunk_used(ptr))
 			double_free();
+		if (DEBUG)
+			printf("deallocating %p (%zu bytes)\n", ptr, get_chunk_size(ptr));
 		deallocate(ptr);
 	}
 }

@@ -29,12 +29,14 @@ void	*next_free_chunk(void *ptr)
 {
 	do
 		ptr = next_chunk(ptr);
-	while (is_chunk_used(ptr) || get_chunk_size(ptr) == DATA_SIZE); 
+	while (ptr && (is_chunk_used(ptr) || get_chunk_size(ptr) == DATA_SIZE)); 
 	return (ptr);
 }
 
 void	*next_chunk(void *ptr)
 {
+	if (!get_chunk_size(ptr))
+		return (NULL);
 	ptr = ptr + get_chunk_size(ptr);
 	return (ptr);
 }

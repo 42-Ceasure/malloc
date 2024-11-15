@@ -52,6 +52,7 @@ void	dump_heap(void)
 
 	ptr = heap; // as for mymalloc, this will be soon given by the system.
 	// I will need to think passing area to that function
+	printf("------------------------\n");
 	printf("heap state :\n");
 	printf("------------------------\n");
 	while (get_chunk_size(ptr))
@@ -59,7 +60,6 @@ void	dump_heap(void)
 		dump_chunk(ptr);
 		ptr = next_chunk(ptr);
 	}
-	dump_chunk(ptr);
 	printf("------------------------\n");
 }
 

@@ -31,6 +31,8 @@ void	set_wormhole(void *const ptr1, void *const ptr2)
 {
 	size_t	size;
 
+	if (ptr2 == NULL)
+		return ;
 	if (ptr1 == NULL)
 	{
 		set_foot_ptr(ptr2, 0);

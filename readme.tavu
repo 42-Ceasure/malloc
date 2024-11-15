@@ -9,8 +9,8 @@ For moment, it is based on a hard coded "heap".
 "heap"
 	is initialised with an 8 byte header and an 8 bytes
 	footer which represents a size_t of 8 bytes.
-	The number is multiple of 16 and so the 57 most signifiant bits
-	represent the size of the chunk, while the 1 less signifiant bits 
+	The number is multiple of 16 and so the 61 most signifiant bits
+	represent the size of the chunk, while the 1 less signifiant bit 
 	represents the status (used or free) of the chunck
 
 "mymalloc"

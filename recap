@@ -1,0 +1,404 @@
+max allocable : 8144
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,status:FREE,size:8160
+8160,8160,0,8160,
+------------------------
+-----
+entering testzarb
+allocating 32 bytes to 0x622f68e7b020
+allocating 32 bytes to 0x622f68e7b040
+allocating 48 bytes to 0x622f68e7b060
+allocating 48 bytes to 0x622f68e7b090
+allocating 64 bytes to 0x622f68e7b0c0
+allocating 64 bytes to 0x622f68e7b100
+allocating 80 bytes to 0x622f68e7b140
+allocating 80 bytes to 0x622f68e7b190
+allocating 96 bytes to 0x622f68e7b1e0
+allocating 96 bytes to 0x622f68e7b240
+allocating 112 bytes to 0x622f68e7b2a0
+allocating 112 bytes to 0x622f68e7b310
+allocating 128 bytes to 0x622f68e7b380
+allocating 128 bytes to 0x622f68e7b400
+allocating 144 bytes to 0x622f68e7b480
+allocating 144 bytes to 0x622f68e7b510
+allocating 160 bytes to 0x622f68e7b5a0
+allocating 160 bytes to 0x622f68e7b640
+allocating 176 bytes to 0x622f68e7b6e0
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,usrptr:0x622f68e7b028,status:USED,size:32
+chunkptr:0x622f68e7b040,usrptr:0x622f68e7b048,status:USED,size:32
+chunkptr:0x622f68e7b060,usrptr:0x622f68e7b068,status:USED,size:48
+chunkptr:0x622f68e7b090,usrptr:0x622f68e7b098,status:USED,size:48
+chunkptr:0x622f68e7b0c0,usrptr:0x622f68e7b0c8,status:USED,size:64
+chunkptr:0x622f68e7b100,usrptr:0x622f68e7b108,status:USED,size:64
+chunkptr:0x622f68e7b140,usrptr:0x622f68e7b148,status:USED,size:80
+chunkptr:0x622f68e7b190,usrptr:0x622f68e7b198,status:USED,size:80
+chunkptr:0x622f68e7b1e0,usrptr:0x622f68e7b1e8,status:USED,size:96
+chunkptr:0x622f68e7b240,usrptr:0x622f68e7b248,status:USED,size:96
+chunkptr:0x622f68e7b2a0,usrptr:0x622f68e7b2a8,status:USED,size:112
+chunkptr:0x622f68e7b310,usrptr:0x622f68e7b318,status:USED,size:112
+chunkptr:0x622f68e7b380,usrptr:0x622f68e7b388,status:USED,size:128
+chunkptr:0x622f68e7b400,usrptr:0x622f68e7b408,status:USED,size:128
+chunkptr:0x622f68e7b480,usrptr:0x622f68e7b488,status:USED,size:144
+chunkptr:0x622f68e7b510,usrptr:0x622f68e7b518,status:USED,size:144
+chunkptr:0x622f68e7b5a0,usrptr:0x622f68e7b5a8,status:USED,size:160
+chunkptr:0x622f68e7b640,usrptr:0x622f68e7b648,status:USED,size:160
+chunkptr:0x622f68e7b6e0,usrptr:0x622f68e7b6e8,status:USED,size:176
+chunkptr:0x622f68e7b790,status:FREE,size:6256
+6256,0,0,6256,
+------------------------
+deallocating 0x622f68e7b040 (32 bytes)
+deallocating 0x622f68e7b090 (48 bytes)
+deallocating 0x622f68e7b100 (64 bytes)
+deallocating 0x622f68e7b190 (80 bytes)
+deallocating 0x622f68e7b240 (96 bytes)
+deallocating 0x622f68e7b310 (112 bytes)
+deallocating 0x622f68e7b400 (128 bytes)
+deallocating 0x622f68e7b510 (144 bytes)
+deallocating 0x622f68e7b640 (160 bytes)
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,usrptr:0x622f68e7b028,status:USED,size:32
+chunkptr:0x622f68e7b040,status:FREE,size:32
+32,80,0,32,
+chunkptr:0x622f68e7b060,usrptr:0x622f68e7b068,status:USED,size:48
+chunkptr:0x622f68e7b090,status:FREE,size:48
+48,112,80,48,
+chunkptr:0x622f68e7b0c0,usrptr:0x622f68e7b0c8,status:USED,size:64
+chunkptr:0x622f68e7b100,status:FREE,size:64
+64,144,112,64,
+chunkptr:0x622f68e7b140,usrptr:0x622f68e7b148,status:USED,size:80
+chunkptr:0x622f68e7b190,status:FREE,size:80
+80,176,144,80,
+chunkptr:0x622f68e7b1e0,usrptr:0x622f68e7b1e8,status:USED,size:96
+chunkptr:0x622f68e7b240,status:FREE,size:96
+96,208,176,96,
+chunkptr:0x622f68e7b2a0,usrptr:0x622f68e7b2a8,status:USED,size:112
+chunkptr:0x622f68e7b310,status:FREE,size:112
+112,240,208,112,
+chunkptr:0x622f68e7b380,usrptr:0x622f68e7b388,status:USED,size:128
+chunkptr:0x622f68e7b400,status:FREE,size:128
+128,272,240,128,
+chunkptr:0x622f68e7b480,usrptr:0x622f68e7b488,status:USED,size:144
+chunkptr:0x622f68e7b510,status:FREE,size:144
+144,304,272,144,
+chunkptr:0x622f68e7b5a0,usrptr:0x622f68e7b5a8,status:USED,size:160
+chunkptr:0x622f68e7b640,status:FREE,size:160
+160,336,304,160,
+chunkptr:0x622f68e7b6e0,usrptr:0x622f68e7b6e8,status:USED,size:176
+chunkptr:0x622f68e7b790,status:FREE,size:6256
+6256,0,336,6256,
+------------------------
+allocating 5984 bytes to 0x622f68e7b790
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,usrptr:0x622f68e7b028,status:USED,size:32
+chunkptr:0x622f68e7b040,status:FREE,size:32
+32,80,0,32,
+chunkptr:0x622f68e7b060,usrptr:0x622f68e7b068,status:USED,size:48
+chunkptr:0x622f68e7b090,status:FREE,size:48
+48,112,80,48,
+chunkptr:0x622f68e7b0c0,usrptr:0x622f68e7b0c8,status:USED,size:64
+chunkptr:0x622f68e7b100,status:FREE,size:64
+64,144,112,64,
+chunkptr:0x622f68e7b140,usrptr:0x622f68e7b148,status:USED,size:80
+chunkptr:0x622f68e7b190,status:FREE,size:80
+80,176,144,80,
+chunkptr:0x622f68e7b1e0,usrptr:0x622f68e7b1e8,status:USED,size:96
+chunkptr:0x622f68e7b240,status:FREE,size:96
+96,208,176,96,
+chunkptr:0x622f68e7b2a0,usrptr:0x622f68e7b2a8,status:USED,size:112
+chunkptr:0x622f68e7b310,status:FREE,size:112
+112,240,208,112,
+chunkptr:0x622f68e7b380,usrptr:0x622f68e7b388,status:USED,size:128
+chunkptr:0x622f68e7b400,status:FREE,size:128
+128,272,240,128,
+chunkptr:0x622f68e7b480,usrptr:0x622f68e7b488,status:USED,size:144
+chunkptr:0x622f68e7b510,status:FREE,size:144
+144,304,272,144,
+chunkptr:0x622f68e7b5a0,usrptr:0x622f68e7b5a8,status:USED,size:160
+chunkptr:0x622f68e7b640,status:FREE,size:160
+160,6320,304,160,
+chunkptr:0x622f68e7b6e0,usrptr:0x622f68e7b6e8,status:USED,size:176
+chunkptr:0x622f68e7b790,usrptr:0x622f68e7b798,status:USED,size:5984
+chunkptr:0x622f68e7cef0,status:FREE,size:272
+272,0,6320,272,
+------------------------
+deallocating 0x622f68e7b790 (5984 bytes)
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,usrptr:0x622f68e7b028,status:USED,size:32
+chunkptr:0x622f68e7b040,status:FREE,size:32
+32,80,0,32,
+chunkptr:0x622f68e7b060,usrptr:0x622f68e7b068,status:USED,size:48
+chunkptr:0x622f68e7b090,status:FREE,size:48
+48,112,80,48,
+chunkptr:0x622f68e7b0c0,usrptr:0x622f68e7b0c8,status:USED,size:64
+chunkptr:0x622f68e7b100,status:FREE,size:64
+64,144,112,64,
+chunkptr:0x622f68e7b140,usrptr:0x622f68e7b148,status:USED,size:80
+chunkptr:0x622f68e7b190,status:FREE,size:80
+80,176,144,80,
+chunkptr:0x622f68e7b1e0,usrptr:0x622f68e7b1e8,status:USED,size:96
+chunkptr:0x622f68e7b240,status:FREE,size:96
+96,208,176,96,
+chunkptr:0x622f68e7b2a0,usrptr:0x622f68e7b2a8,status:USED,size:112
+chunkptr:0x622f68e7b310,status:FREE,size:112
+112,240,208,112,
+chunkptr:0x622f68e7b380,usrptr:0x622f68e7b388,status:USED,size:128
+chunkptr:0x622f68e7b400,status:FREE,size:128
+128,272,240,128,
+chunkptr:0x622f68e7b480,usrptr:0x622f68e7b488,status:USED,size:144
+chunkptr:0x622f68e7b510,status:FREE,size:144
+144,304,272,144,
+chunkptr:0x622f68e7b5a0,usrptr:0x622f68e7b5a8,status:USED,size:160
+chunkptr:0x622f68e7b640,status:FREE,size:160
+160,336,304,160,
+chunkptr:0x622f68e7b6e0,usrptr:0x622f68e7b6e8,status:USED,size:176
+chunkptr:0x622f68e7b790,status:FREE,size:6256
+6256,6256,336,6256,
+------------------------
+allocating 32 bytes to 0x622f68e7b040
+allocating 32 bytes to 0x622f68e7b090
+allocating 32 bytes to 0x622f68e7b100
+allocating 32 bytes to 0x622f68e7b120
+allocating 32 bytes to 0x622f68e7b190
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,usrptr:0x622f68e7b028,status:USED,size:32
+chunkptr:0x622f68e7b040,usrptr:0x622f68e7b048,status:USED,size:32
+chunkptr:0x622f68e7b060,usrptr:0x622f68e7b068,status:USED,size:48
+chunkptr:0x622f68e7b090,usrptr:0x622f68e7b098,status:USED,size:32
+chunkptr:0x622f68e7b0b0,status:FREE,size:16
+16,16,16,16,
+chunkptr:0x622f68e7b0c0,usrptr:0x622f68e7b0c8,status:USED,size:64
+chunkptr:0x622f68e7b100,usrptr:0x622f68e7b108,status:USED,size:32
+chunkptr:0x622f68e7b120,usrptr:0x622f68e7b128,status:USED,size:32
+chunkptr:0x622f68e7b140,usrptr:0x622f68e7b148,status:USED,size:80
+chunkptr:0x622f68e7b190,usrptr:0x622f68e7b198,status:USED,size:32
+chunkptr:0x622f68e7b1b0,status:FREE,size:48
+48,144,0,48,
+chunkptr:0x622f68e7b1e0,usrptr:0x622f68e7b1e8,status:USED,size:96
+chunkptr:0x622f68e7b240,status:FREE,size:96
+96,208,144,96,
+chunkptr:0x622f68e7b2a0,usrptr:0x622f68e7b2a8,status:USED,size:112
+chunkptr:0x622f68e7b310,status:FREE,size:112
+112,240,208,112,
+chunkptr:0x622f68e7b380,usrptr:0x622f68e7b388,status:USED,size:128
+chunkptr:0x622f68e7b400,status:FREE,size:128
+128,272,240,128,
+chunkptr:0x622f68e7b480,usrptr:0x622f68e7b488,status:USED,size:144
+chunkptr:0x622f68e7b510,status:FREE,size:144
+144,304,272,144,
+chunkptr:0x622f68e7b5a0,usrptr:0x622f68e7b5a8,status:USED,size:160
+chunkptr:0x622f68e7b640,status:FREE,size:160
+160,336,304,160,
+chunkptr:0x622f68e7b6e0,usrptr:0x622f68e7b6e8,status:USED,size:176
+chunkptr:0x622f68e7b790,status:FREE,size:6256
+6256,6256,336,6256,
+------------------------
+allocating 128 bytes to 0x622f68e7b400
+allocating 160 bytes to 0x622f68e7b640
+allocating 32 bytes to 0x622f68e7b1b0
+allocating 128 bytes to 0x622f68e7b510
+allocating 128 bytes to 0x622f68e7b790
+allocating 64 bytes to 0x622f68e7b240
+allocating 64 bytes to 0x622f68e7b310
+allocating 64 bytes to 0x622f68e7b810
+allocating 64 bytes to 0x622f68e7b850
+allocating 32 bytes to 0x622f68e7b280
+allocating 32 bytes to 0x622f68e7b350
+allocating 5024 bytes to 0x622f68e7b890
+allocating 32 bytes to 0x622f68e7cc30
+allocating 144 bytes to 0x622f68e7cc50
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,usrptr:0x622f68e7b028,status:USED,size:32
+chunkptr:0x622f68e7b040,usrptr:0x622f68e7b048,status:USED,size:32
+chunkptr:0x622f68e7b060,usrptr:0x622f68e7b068,status:USED,size:48
+chunkptr:0x622f68e7b090,usrptr:0x622f68e7b098,status:USED,size:32
+chunkptr:0x622f68e7b0b0,status:FREE,size:16
+16,16,16,16,
+chunkptr:0x622f68e7b0c0,usrptr:0x622f68e7b0c8,status:USED,size:64
+chunkptr:0x622f68e7b100,usrptr:0x622f68e7b108,status:USED,size:32
+chunkptr:0x622f68e7b120,usrptr:0x622f68e7b128,status:USED,size:32
+chunkptr:0x622f68e7b140,usrptr:0x622f68e7b148,status:USED,size:80
+chunkptr:0x622f68e7b190,usrptr:0x622f68e7b198,status:USED,size:32
+chunkptr:0x622f68e7b1b0,usrptr:0x622f68e7b1b8,status:USED,size:32
+chunkptr:0x622f68e7b1d0,status:FREE,size:16
+16,16,16,16,
+chunkptr:0x622f68e7b1e0,usrptr:0x622f68e7b1e8,status:USED,size:96
+chunkptr:0x622f68e7b240,usrptr:0x622f68e7b248,status:USED,size:64
+chunkptr:0x622f68e7b280,usrptr:0x622f68e7b288,status:USED,size:32
+chunkptr:0x622f68e7b2a0,usrptr:0x622f68e7b2a8,status:USED,size:112
+chunkptr:0x622f68e7b310,usrptr:0x622f68e7b318,status:USED,size:64
+chunkptr:0x622f68e7b350,usrptr:0x622f68e7b358,status:USED,size:32
+chunkptr:0x622f68e7b370,status:FREE,size:16
+16,16,16,16,
+chunkptr:0x622f68e7b380,usrptr:0x622f68e7b388,status:USED,size:128
+chunkptr:0x622f68e7b400,usrptr:0x622f68e7b408,status:USED,size:128
+chunkptr:0x622f68e7b480,usrptr:0x622f68e7b488,status:USED,size:144
+chunkptr:0x622f68e7b510,usrptr:0x622f68e7b518,status:USED,size:128
+chunkptr:0x622f68e7b590,status:FREE,size:16
+16,16,16,16,
+chunkptr:0x622f68e7b5a0,usrptr:0x622f68e7b5a8,status:USED,size:160
+chunkptr:0x622f68e7b640,usrptr:0x622f68e7b648,status:USED,size:160
+chunkptr:0x622f68e7b6e0,usrptr:0x622f68e7b6e8,status:USED,size:176
+chunkptr:0x622f68e7b790,usrptr:0x622f68e7b798,status:USED,size:128
+chunkptr:0x622f68e7b810,usrptr:0x622f68e7b818,status:USED,size:64
+chunkptr:0x622f68e7b850,usrptr:0x622f68e7b858,status:USED,size:64
+chunkptr:0x622f68e7b890,usrptr:0x622f68e7b898,status:USED,size:5024
+chunkptr:0x622f68e7cc30,usrptr:0x622f68e7cc38,status:USED,size:32
+chunkptr:0x622f68e7cc50,usrptr:0x622f68e7cc58,status:USED,size:144
+chunkptr:0x622f68e7cce0,status:FREE,size:800
+800,0,0,800,
+------------------------
+deallocating 0x622f68e7b020 (32 bytes)
+deallocating 0x622f68e7b040 (32 bytes)
+deallocating 0x622f68e7b090 (32 bytes)
+deallocating 0x622f68e7b060 (48 bytes)
+deallocating 0x622f68e7b100 (32 bytes)
+deallocating 0x622f68e7b120 (32 bytes)
+deallocating 0x622f68e7b0c0 (64 bytes)
+deallocating 0x622f68e7b190 (32 bytes)
+deallocating 0x622f68e7b400 (128 bytes)
+deallocating 0x622f68e7b140 (80 bytes)
+deallocating 0x622f68e7b640 (160 bytes)
+deallocating 0x622f68e7b1b0 (32 bytes)
+deallocating 0x622f68e7b1e0 (96 bytes)
+deallocating 0x622f68e7b510 (128 bytes)
+deallocating 0x622f68e7b790 (128 bytes)
+deallocating 0x622f68e7b2a0 (112 bytes)
+deallocating 0x622f68e7b240 (64 bytes)
+deallocating 0x622f68e7b310 (64 bytes)
+deallocating 0x622f68e7b380 (128 bytes)
+deallocating 0x622f68e7b810 (64 bytes)
+deallocating 0x622f68e7b850 (64 bytes)
+deallocating 0x622f68e7b480 (144 bytes)
+deallocating 0x622f68e7b280 (32 bytes)
+deallocating 0x622f68e7b350 (32 bytes)
+deallocating 0x622f68e7b5a0 (160 bytes)
+deallocating 0x622f68e7b890 (5024 bytes)
+deallocating 0x622f68e7cc30 (32 bytes)
+deallocating 0x622f68e7b6e0 (176 bytes)
+deallocating 0x622f68e7cc50 (144 bytes)
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,status:FREE,size:8160
+8160,8160,0,8160,
+------------------------
+leaving testzarb
+-----
+allocating 176 bytes to 0x622f68e7b020
+pointer tab initialised
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,usrptr:0x622f68e7b028,status:USED,size:176
+chunkptr:0x622f68e7b0d0,status:FREE,size:7984
+7984,0,0,7984,
+------------------------
+allocating 32 bytes to 0x622f68e7b0d0
+XXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b0f0
+XXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b120
+XXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b150
+XXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b180
+XXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b1b0
+XXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b1e0
+XXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b210
+XXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b240
+XXXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b270
+XXXXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b2a0
+XXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b2d0
+XXXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b300
+XXXXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b330
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b360
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b390
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 48 bytes to 0x622f68e7b3c0
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 64 bytes to 0x622f68e7b3f0
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 64 bytes to 0x622f68e7b430
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+allocating 64 bytes to 0x622f68e7b470
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,usrptr:0x622f68e7b028,status:USED,size:176
+chunkptr:0x622f68e7b0d0,usrptr:0x622f68e7b0d8,status:USED,size:32
+chunkptr:0x622f68e7b0f0,usrptr:0x622f68e7b0f8,status:USED,size:48
+chunkptr:0x622f68e7b120,usrptr:0x622f68e7b128,status:USED,size:48
+chunkptr:0x622f68e7b150,usrptr:0x622f68e7b158,status:USED,size:48
+chunkptr:0x622f68e7b180,usrptr:0x622f68e7b188,status:USED,size:48
+chunkptr:0x622f68e7b1b0,usrptr:0x622f68e7b1b8,status:USED,size:48
+chunkptr:0x622f68e7b1e0,usrptr:0x622f68e7b1e8,status:USED,size:48
+chunkptr:0x622f68e7b210,usrptr:0x622f68e7b218,status:USED,size:48
+chunkptr:0x622f68e7b240,usrptr:0x622f68e7b248,status:USED,size:48
+chunkptr:0x622f68e7b270,usrptr:0x622f68e7b278,status:USED,size:48
+chunkptr:0x622f68e7b2a0,usrptr:0x622f68e7b2a8,status:USED,size:48
+chunkptr:0x622f68e7b2d0,usrptr:0x622f68e7b2d8,status:USED,size:48
+chunkptr:0x622f68e7b300,usrptr:0x622f68e7b308,status:USED,size:48
+chunkptr:0x622f68e7b330,usrptr:0x622f68e7b338,status:USED,size:48
+chunkptr:0x622f68e7b360,usrptr:0x622f68e7b368,status:USED,size:48
+chunkptr:0x622f68e7b390,usrptr:0x622f68e7b398,status:USED,size:48
+chunkptr:0x622f68e7b3c0,usrptr:0x622f68e7b3c8,status:USED,size:48
+chunkptr:0x622f68e7b3f0,usrptr:0x622f68e7b3f8,status:USED,size:64
+chunkptr:0x622f68e7b430,usrptr:0x622f68e7b438,status:USED,size:64
+chunkptr:0x622f68e7b470,usrptr:0x622f68e7b478,status:USED,size:64
+chunkptr:0x622f68e7b4b0,status:FREE,size:6992
+6992,0,0,6992,
+------------------------
+deallocating 0x622f68e7b470 (64 bytes)
+deallocating 0x622f68e7b430 (64 bytes)
+deallocating 0x622f68e7b3f0 (64 bytes)
+deallocating 0x622f68e7b3c0 (48 bytes)
+deallocating 0x622f68e7b390 (48 bytes)
+deallocating 0x622f68e7b360 (48 bytes)
+deallocating 0x622f68e7b330 (48 bytes)
+deallocating 0x622f68e7b300 (48 bytes)
+deallocating 0x622f68e7b2d0 (48 bytes)
+deallocating 0x622f68e7b2a0 (48 bytes)
+deallocating 0x622f68e7b270 (48 bytes)
+deallocating 0x622f68e7b240 (48 bytes)
+deallocating 0x622f68e7b210 (48 bytes)
+deallocating 0x622f68e7b1e0 (48 bytes)
+deallocating 0x622f68e7b1b0 (48 bytes)
+deallocating 0x622f68e7b180 (48 bytes)
+deallocating 0x622f68e7b150 (48 bytes)
+deallocating 0x622f68e7b120 (48 bytes)
+deallocating 0x622f68e7b0f0 (48 bytes)
+deallocating 0x622f68e7b0d0 (32 bytes)
+deallocating 0x622f68e7b020 (176 bytes)
+------------------------
+heap state :
+------------------------
+chunkptr:0x622f68e7b020,status:FREE,size:8160
+8160,8160,0,8160,
+------------------------

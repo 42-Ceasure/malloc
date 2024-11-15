@@ -38,6 +38,8 @@ void	split_chunk(void *const ptr, const size_t size)
 
 	new_size = get_chunk_size(ptr) - size;
 	set_chunk(ptr + size, new_size, CHUNK_FREE);
-	if (new_size > DATA_SIZE)
+	if (!is_chunk_used(next_chunk(ptr + size)))
+		merge_chunks(ptr + size, next_chunk(ptr + size), CHUNK_FREE);
+	else if (new_size > DATA_SIZE)
 		set_wormhole(ptr + size, next_free_chunk(ptr));
 }
