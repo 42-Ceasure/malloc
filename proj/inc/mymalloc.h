@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _cpy.c                                             :+:      :+:    :+:   */
+/*   mymalloc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/10/25 10:55:12 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/18 10:42:21 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@
 extern void *const heap;
 
 size_t	set_chunk_size(const size_t user_size);
+void	allocate(void *const ptr, const size_t size);
 void	*mymalloc(size_t user_size);
 
-void	*realloc(void *ptr, size_t size);
+void	*myrealloc(void *ptr, size_t size);
 
 void	myfree(void *ptr);
 

@@ -27,7 +27,7 @@ For moment, it is based on a hard coded "heap".
 
 to do next:
 
-	realloc
+	test realloc
 
 	find
 	- implement find next fit
