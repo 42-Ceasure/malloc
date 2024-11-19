@@ -39,8 +39,17 @@ to do next:
 	- use page concept
 
 	mmap
-	- understand mmap
 	- implement usage of mmap
+	I need to find a way to create one or more base heap,
+	accessible nearly everywhere in functions. Then use them as before.
+	I should :
+		- be able to find all memory system gave me
+		- find if there's a way to keep my block architecture as it
+		in combination with pages (btw there's a will)
+		- maybe global struct of few pointers ??
+
+	
+	
 	- understand munmap
 	- implement usage of munmap
 	

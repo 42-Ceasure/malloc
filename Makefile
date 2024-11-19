@@ -17,12 +17,14 @@ NAME		=	mymalloc
 INC			=	mymalloc.h
 INCDIR		=	./proj/inc/
 INCFIL		=	$(addprefix $(INCDIR), $(INC))
-SRC			=	malloc.c			free.c				realloc.c \
-				chunk_find.c		chunk_ask.c			chunk_edit.c \
-				chunk_move_bwd.c	chunk_move_fwd.c	chunk_worm.c \
-				chunk_manage.c		micro_data.c		heap.c \
-				main.c
 SRCDIR		=	./proj/src/
+BASESRC		=	malloc.c			free.c				realloc.c \
+				main.c
+CHKDIR		= 	./proj/src/chunk/
+CHKSRC		=	chunk_find.c		chunk_ask.c			chunk_edit.c \
+				chunk_move_bwd.c	chunk_move_fwd.c	chunk_worm.c \
+				chunk_manage.c		micro_data.c		heap.c
+SRC			=	$(BASESRC) $(CHKSRC)
 OBJ			=	$(SRC:.c=.o)
 OBJFIL		=	$(addprefix $(OBJDIR), $(OBJ))
 
@@ -46,6 +48,10 @@ $(TEST)		:	$(OBJFILT) $(NAME)
 				@$(CC) $(CFLAG) $^ -o $@
 
 $(OBJDIR)%.o:	$(SRCDIR)%.c $(INCFIL)
+				@mkdir -p $(OBJDIR)
+				$(CC) $(CFLAG) -I $(INCDIRT) -I $(INCDIR) -o $@ -c $<
+
+$(OBJDIR)%.o:	$(CHKDIR)%.c $(INCFIL)
 				@mkdir -p $(OBJDIR)
 				$(CC) $(CFLAG) -I $(INCDIRT) -I $(INCDIR) -o $@ -c $<
 
