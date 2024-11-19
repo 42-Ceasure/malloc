@@ -27,7 +27,11 @@ For moment, it is based on a hard coded "heap".
 
 to do next:
 
+	implement new way to manage 16 octets chunks > it's just used
+
 	test realloc
+		- reallocate more elsewhere should check the prev chunk,
+		if it's free and large enough, it can merge it then move mem
 
 	find
 	- implement find next fit

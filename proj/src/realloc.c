@@ -12,8 +12,6 @@
 
 #include <mymalloc.h>
 
-# include <string.h>
-
 static void	invalid_pointer(void)
 {
 	printf("myrealloc(): invalid pointer\n");
@@ -36,8 +34,8 @@ void	*realloc_more_elsewhere(void *old, size_t size)
 	if (new == NULL)
 		return (NULL);
 	usr_data_size = get_chunk_size(old) - DATA_SIZE;
-	// memcpy(new, usrptr_from_chkptr(old), usr_data_size);
-	myfree(usrptr_from_chkptr(old));
+	memcpy(usrptr_from_chkptr(new), usrptr_from_chkptr(old), usr_data_size);
+	deallocate(old);
 	return (new);
 }
 

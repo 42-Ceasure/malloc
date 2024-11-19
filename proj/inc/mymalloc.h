@@ -13,8 +13,14 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
+# include <sys/mman.h>
+# include <unistd.h>
+
+/* **************** */
 # include <stdlib.h>
+# include <string.h>
 # include <stdio.h>
+/* **************** */
 
 # define DEBUG			(1)
 
@@ -35,7 +41,13 @@
 # define MAX_USABLE		(HEAP_MAX - END_CHUNK)
 # define USR_USABLE		(MAX_USABLE - DATA_SIZE)
 
-extern void *const heap;
+extern void *const heap; //////////////
+
+typedef struct	s_heap
+{
+	void	*page;
+}				t_heap;
+
 
 size_t	set_chunk_size(const size_t user_size);
 void	allocate(void *const ptr, const size_t size);
@@ -43,6 +55,7 @@ void	*mymalloc(size_t user_size);
 
 void	*myrealloc(void *ptr, size_t size);
 
+void	deallocate(void *ptr);
 void	myfree(void *ptr);
 
 void	dump_chunk_datas(void *ptr);

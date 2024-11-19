@@ -19,7 +19,7 @@ INCDIR		=	./proj/inc/
 INCFIL		=	$(addprefix $(INCDIR), $(INC))
 SRCDIR		=	./proj/src/
 BASESRC		=	malloc.c			free.c				realloc.c \
-				main.c
+				dump.c				main.c
 CHKDIR		= 	./proj/src/chunk/
 CHKSRC		=	chunk_find.c		chunk_ask.c			chunk_edit.c \
 				chunk_move_bwd.c	chunk_move_fwd.c	chunk_worm.c \
