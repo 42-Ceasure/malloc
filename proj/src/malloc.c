@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/18 11:12:13 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:27:02 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,23 @@ void	allocate(void *const ptr, const size_t size)
 
 void	*mymalloc(size_t user_size)
 {
-	void	*ptr;
+	void	*ptr = NULL;
 	size_t	size;
 
-	if (user_size < 1 || user_size > USR_USABLE)
+	if (user_size < 1)
 		return (NULL);
-	ptr = NULL; // this will be soon given by the system.
-	// I will also need to do something similar to "init_heap" on that memory
+	if (g_heap == NULL)
+		init_heap();
 	size = set_chunk_size(user_size);
-	ptr = find_ffit_chunk(ptr, size);
-	if (ptr == NULL)
-		return (NULL);
 	if (DEBUG)
-		printf("allocating %zu bytes to %p\n", size, ptr);
+		printf("trying to allocate %zu bytes,", size);
+	ptr = find_ffit_chunk(g_heap->tiny, size);
+	if (ptr == NULL)
+	{
+		printf(" NO SPACE FOUND.\n");
+		return (NULL);
+	}
+	printf("space found at %p\n", ptr);
 	allocate(ptr, size);
 	return (usrptr_from_chkptr(ptr));
 }

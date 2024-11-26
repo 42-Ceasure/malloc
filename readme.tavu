@@ -27,8 +27,6 @@ For moment, it is based on a hard coded "heap".
 
 to do next:
 
-	implement new way to manage 16 octets chunks > it's just used
-
 	test realloc
 		- reallocate more elsewhere should check the prev chunk,
 		if it's free and large enough, it can merge it then move mem
@@ -38,9 +36,6 @@ to do next:
 	- implement find best fit
 	- implement find ...
 
-	page concept
-	- implement page concept
-	- use page concept
 
 	mmap
 	- implement usage of mmap
@@ -52,9 +47,7 @@ to do next:
 		in combination with pages (btw there's a will)
 		- maybe global struct of few pointers ??
 
-	
-	
-	- understand munmap
+
 	- implement usage of munmap
 	
 	munmap

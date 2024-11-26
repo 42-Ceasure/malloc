@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/18 11:12:07 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:34:54 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*realloc_more_elsewhere(void *old, size_t size)
 	if (new == NULL)
 		return (NULL);
 	usr_data_size = get_chunk_size(old) - DATA_SIZE;
-	memcpy(usrptr_from_chkptr(new), usrptr_from_chkptr(old), usr_data_size);
+	memcpy(new, usrptr_from_chkptr(old), usr_data_size);
 	deallocate(old);
 	return (new);
 }
@@ -52,7 +52,7 @@ void	*reallocate(void *chk_ptr, size_t usr_size)
 	else
 	{
 		next = next_chunk(chk_ptr);
-		if (!is_chunk_used(next))
+		if (!get_chunk_status(next))
 			if (size <= get_chunk_size(chk_ptr) + get_chunk_size(next))
 				return (realloc_more_here(chk_ptr, next, size));
 		return (realloc_more_elsewhere(chk_ptr, usr_size));

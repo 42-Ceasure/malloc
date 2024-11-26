@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/18 11:12:21 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:34:54 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static void	invalid_pointer(void)
 void	deallocate(void *ptr)
 {
 	set_chunk(ptr, get_chunk_size(ptr), CHUNK_FREE);
-	if (get_chunk_size(next_chunk(ptr)) && (!is_chunk_used(next_chunk(ptr))))
+	if (get_chunk_size(next_chunk(ptr)) && (!get_chunk_status(next_chunk(ptr))))
 		merge_chunks(ptr, next_chunk(ptr), CHUNK_FREE);
-	if (prev_chunk(ptr) && (!is_chunk_used(prev_chunk(ptr))))
+	if (prev_chunk(ptr) && (!get_chunk_status(prev_chunk(ptr))))
 		ptr = merge_chunks(prev_chunk(ptr), ptr, CHUNK_FREE);
 	set_wormhole(ptr, next_free_chunk(ptr));
 	set_wormhole(prev_free_chunk(ptr), ptr);
@@ -44,7 +44,7 @@ void	myfree(void *usr_ptr)
 		ptr = get_user_chunk(usr_ptr);
 		if (ptr == NULL)
 			invalid_pointer();
-		if (!is_chunk_used(ptr))
+		if (!get_chunk_status(ptr))
 			double_free();
 		if (DEBUG)
 			printf("deallocating %p (%zu bytes)\n", ptr, get_chunk_size(ptr));

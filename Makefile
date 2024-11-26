@@ -8,7 +8,8 @@ TEST		=	prog
 CC			=	clang
 
 # flags
-CFLAG		=	-Wall -Wextra -Werror
+CFLAG		=	-Wall -Wextra -Werror -g -O0 -fsanitize=address
+# CFLAG		=	-Wall -Wextra -Werror
 
 OBJDIR		=	./obj/
 

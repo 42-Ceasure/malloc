@@ -6,21 +6,13 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/18 11:12:19 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:34:31 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mymalloc.h>
 
-char heap_area[HEAP_MAX] = {'0'}; //////////////////
-void *const	heap = heap_area; /////////////////
-
-void	*mmap(void *addr,
-		size_t length,
-		int prot,
-		int flags,
-        int fd,
-		off_t offset);
+t_heap *g_heap = NULL;
 
 void	*getmap(size_t len)
 {
@@ -37,13 +29,32 @@ void	*getmap(size_t len)
 
 void	*getXpages(size_t x)
 {
-	return (getmap(x * getpagesize()));
+	return (getmap(x * PAGE_SIZE));
+}
+
+void	*init_area(size_t nb)
+{
+	void	*ptr;
+	size_t	size;
+
+	size = nb * PAGE_SIZE - END_CHUNK;
+	ptr = getXpages(nb);
+	set_chunk(ptr, size, CHUNK_FREE);
+	set_header(ptr + size, 0, CHUNK_FREE);
+	set_footer(ptr + size + END_CHUNK, 0, CHUNK_FREE);
+	set_wormhole(ptr, ptr + size);
+	return (ptr);
 }
 
 void	init_heap(void)
 {
-	set_chunk(heap, MAX_USABLE, CHUNK_FREE);
-	set_header(heap + MAX_USABLE, 0, CHUNK_FREE);
-	set_footer(heap + MAX_USABLE + END_CHUNK, 0, CHUNK_FREE);
-	set_wormhole(heap, heap + MAX_USABLE);
+	static t_heap heap;
+
+	g_heap = &heap;
+	g_heap->tiny = init_area(1);
+	g_heap->medium = init_area(4);
+	// g_heap->large = getXpages(1);
+	
+	dump_heap(g_heap->tiny);
+	// dump_heap(g_heap->medium);
 }

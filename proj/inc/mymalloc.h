@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/18 10:42:21 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:04:35 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,19 @@
 # define LSB			(0x00000001)
 # define NBR			(0xFFFFFFF8)
 
-# define HEAP_MAX		(1024 * 8)
-# define MAX_USABLE		(HEAP_MAX - END_CHUNK)
-# define USR_USABLE		(MAX_USABLE - DATA_SIZE)
+# define PAGE_SIZE		(getpagesize())
+// # define HEAP_MAX		(1024 * 8)
+// # define MAX_USABLE		(HEAP_MAX - END_CHUNK)
+// # define USR_USABLE		(MAX_USABLE - DATA_SIZE)
 
-extern void *const heap; //////////////
-
-typedef struct	s_heap
+typedef	struct	s_heap
 {
-	void	*page;
+	void	*tiny;
+	void	*medium;
+	void	*large;
 }				t_heap;
 
+extern	t_heap	*g_heap;
 
 size_t	set_chunk_size(const size_t user_size);
 void	allocate(void *const ptr, const size_t size);
@@ -60,7 +62,7 @@ void	myfree(void *ptr);
 
 void	dump_chunk_datas(void *ptr);
 void	dump_chunk(void *ptr);
-void	dump_heap(void);
+void	dump_heap(void *ptr);
 void	init_heap(void);
 
 size_t	get_micro_data(const void *const ptr);
@@ -81,7 +83,7 @@ void	*get_user_chunk(void *usr_ptr);
 void	*merge_chunks(void *const ptr1, void *ptr2, const size_t status);
 void	split_chunk(void *const ptr, const size_t size);
 
-size_t	is_chunk_used(const void *const ptr);
+size_t	get_chunk_status(const void *const ptr);
 size_t	get_chunk_size(const void *const ptr);
 void	*chkptr_from_usrptr(void *user_ptr);
 void	*usrptr_from_chkptr(void *ptr);

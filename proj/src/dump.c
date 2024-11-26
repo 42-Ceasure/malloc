@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/18 11:12:19 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:18:03 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,17 @@ void	dump_chunk(void *ptr)
 	if (ptr)
 	{
 		printf("chunkptr:%p,", ptr);
-		if (is_chunk_used(ptr))
+		if (get_chunk_status(ptr))
 			printf("usrptr:%p,", usrptr_from_chkptr(ptr));
-		printf("status:%s,", is_chunk_used(ptr) == 1 ? "USED" : "FREE");
+		printf("status:%s,", get_chunk_status(ptr) == 1 ? "USED" : "FREE");
 		printf("size:%zu\n", get_chunk_size(ptr));
-		if (!is_chunk_used(ptr))
+		if (!get_chunk_status(ptr))
 			dump_chunk_datas(ptr);
 	}
 }
 
-void	dump_heap(void)
+void	dump_heap(void *ptr)
 {
-	void	*ptr;
-
-	ptr = heap; // as for mymalloc, this will be soon given by the system.
-	// I will need to think passing area to that function
 	printf("------------------------\n");
 	printf("heap state :\n");
 	printf("------------------------\n");

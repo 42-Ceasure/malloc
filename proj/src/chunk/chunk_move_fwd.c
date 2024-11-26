@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/18 11:12:23 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:34:54 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*jump_next_free_chunk(void *ptr)
 {
-	if (is_chunk_used(ptr))
+	if (get_chunk_status(ptr))
 		ptr = next_free_chunk(ptr);
 	else
 	{
@@ -29,7 +29,7 @@ void	*next_free_chunk(void *ptr)
 {
 	do
 		ptr = next_chunk(ptr);
-	while (ptr && (is_chunk_used(ptr) || get_chunk_size(ptr) == DATA_SIZE)); 
+	while (ptr && (get_chunk_status(ptr) || get_chunk_size(ptr) == DATA_SIZE)); 
 	return (ptr);
 }
 

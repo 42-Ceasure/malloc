@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/18 11:12:26 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:44:28 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*get_user_chunk(void *usr_ptr)
 {
 	void	*ptr;
 
-	ptr = heap;
+	ptr = g_heap->tiny;
 	while (get_chunk_size(ptr))
 	{
 		if (ptr == chkptr_from_usrptr(usr_ptr))
@@ -38,7 +38,7 @@ void	split_chunk(void *const ptr, const size_t size)
 
 	new_size = get_chunk_size(ptr) - size;
 	set_chunk(ptr + size, new_size, CHUNK_FREE);
-	if (!is_chunk_used(next_chunk(ptr + size)))
+	if (!get_chunk_status(next_chunk(ptr + size)))
 		merge_chunks(ptr + size, next_chunk(ptr + size), CHUNK_FREE);
 	if (new_size > DATA_SIZE)
 		set_wormhole(ptr + size, next_free_chunk(ptr));
