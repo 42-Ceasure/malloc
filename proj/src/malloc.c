@@ -45,10 +45,12 @@ void	*mymalloc(size_t user_size)
 	ptr = find_ffit_chunk(g_heap->tiny, size);
 	if (ptr == NULL)
 	{
-		printf(" NO SPACE FOUND.\n");
+		if (DEBUG)
+			printf(" NO SPACE FOUND.\n");
 		return (NULL);
 	}
-	printf("space found at %p\n", ptr);
+	if (DEBUG)
+		printf(" space found at %p\n", ptr);
 	allocate(ptr, size);
 	return (usrptr_from_chkptr(ptr));
 }

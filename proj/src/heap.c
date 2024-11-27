@@ -56,5 +56,5 @@ void	init_heap(void)
 	// g_heap->large = getXpages(1);
 	
 	dump_heap(g_heap->tiny);
-	// dump_heap(g_heap->medium);
+	dump_heap(g_heap->medium);
 }
