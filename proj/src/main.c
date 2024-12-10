@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/26 14:26:36 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:21:28 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,11 @@ void	testzarb()
 	printf("leaving %s\n-----\n", __func__);
 }
 
-int main(int ac, char **av)
+void	anotherweirdtest()
 {
 	char	**ptr;
 	size_t	i = 0;
 
-	testzarb();
 	ptr = (char **)mymalloc(sizeof(char *) * TEST);
 	if (ptr != NULL)
 	{
@@ -122,29 +121,47 @@ int main(int ac, char **av)
 	dump_heap(g_heap->tiny);
 	myrealloc(ptr[0], 68);
 	dump_heap(g_heap->tiny);
+}
 
+void	writepointertest()
+{
+	char heap[64];
+	char heap2[64];
+	char heap3[64];
+	void *tmp = heap;
+	void *tmp2 = heap2;
+	// void *tmp3 = heap3;
 
+	printf("heap\t:%p\n", heap);
+	printf("heap2\t:%p\n", heap2);
+	printf("heap3\t:%p\n", heap3);
+	write_adress(tmp, tmp2);
+	write_adress(tmp + 8, NULL);
 
-	(void)ptr;
+	void	*test = get_adress(tmp);
+	void	*test2 = get_adress(tmp + 8);
+	printf("test\t:%p\n", test);
+	printf("test2\t:%p\n", test2);
+	printf("%zu\n", (size_t)(tmp + 8));
+}
+
+void	testpage()
+{
+	void	*page;
+	size_t	nb;
+
+	nb = 2;
+	page = get_page(nb);
+	dump_page(page);
+}
+
+int main(int ac, char **av)
+{
+	// testzarb();
+	// anotherweirdtest();
+	// writepointertest();
+	testpage();
 	(void)ac;
 	(void)av;
 	return (0);
 }
-
-// int main(void)
-// {
-// 	void	*ptr;
-// 	void	*ptr2;
-// 	init_heap();
-// 	dump_heap(g_heap->tiny);
-// 	mymalloc(16);
-// 	ptr = mymalloc(48);
-// 	mymalloc(64);
-// 	ptr2 = mymalloc(32);
-// 	mymalloc(16);
-// 	dump_heap(g_heap->tiny);
-// 	myfree(ptr);
-// 	myfree(ptr2);
-// 	dump_heap(g_heap->tiny);
-// 	return (0);
-// }

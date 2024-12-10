@@ -14,24 +14,6 @@
 
 t_heap *g_heap = NULL;
 
-void	*getmap(size_t len)
-{
-	void	*ptr;
-
-	ptr = mmap(	NULL,
-				len,
-				PROT_READ | PROT_WRITE,
-				MAP_PRIVATE | MAP_ANONYMOUS,
-				0,
-				0);
-	return (ptr);
-}
-
-void	*getXpages(size_t x)
-{
-	return (getmap(x * PAGE_SIZE));
-}
-
 void	*init_area(size_t nb)
 {
 	void	*ptr;
