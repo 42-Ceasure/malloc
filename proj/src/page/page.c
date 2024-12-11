@@ -6,13 +6,13 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/10 16:31:56 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:48:24 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mymalloc.h>
 
-void			*getmap(const size_t len)
+void	*getmap(const size_t len)
 {
 	void	*map;
 
@@ -91,91 +91,80 @@ size_t	get_page_smallestfreespace(size_t *page)
 	return (*(page + SFSPACE));
 }
 
-t_page_header	get_page_header(size_t *page)
-{
-	t_page_header dst;
-
-	dst.size = get_page_size(page);
-	dst.type = get_page_type(page);
-	dst.allocations = get_page_allocations(page);
-	dst.nextpage = get_page_nextpage(page);
-	dst.prevpage = get_page_prevpage(page);
-	dst.freespace = get_page_freespace(page);
-	dst.largestfreespace = get_page_largestfreespace(page);
-	dst.smallestfreespace = get_page_smallestfreespace(page);
-	return (dst);
-}
-
-void			set_page_header(size_t *page, t_page_header src)
-{
-	set_page_size(page, src.size);
-	set_page_type(page, src.type);
-	set_page_allocations(page, src.allocations);
-	set_page_nextpage(page, src.nextpage);
-	set_page_prevpage(page, src.prevpage);
-	set_page_freespace(page, src.freespace);
-	set_page_largestfreespace(page, src.largestfreespace);
-	set_page_smallestfreespace(page, src.smallestfreespace);
-}
-
-void			*nextpage(size_t *page)
-{
-	return (get_page_nextpage(page));
-}
-
-void			*prevpage(size_t *page)
-{
-	return (get_page_prevpage(page));
-}
-
 void	init_page(void *page, size_t size)
 {
-	t_page_header	base;
-
-	base.size = size;
-	base.type = 0;
-	base.allocations = 0;
-	base.nextpage = NULL;
-	base.prevpage = NULL;
-	base.freespace = size - PAGE_HEADSIZE;
-	base.largestfreespace = base.freespace;
-	base.smallestfreespace = base.freespace;
-	set_page_header(page, base);
+	set_page_size(page, size);
+	set_page_type(page, 0);
+	set_page_allocations(page, 0);
+	set_page_nextpage(page, NULL);
+	set_page_prevpage(page, NULL);
+	set_page_freespace(page, size - PAGE_HEADSIZE);
+	set_page_largestfreespace(page, size - PAGE_HEADSIZE);
+	set_page_smallestfreespace(page, size - PAGE_HEADSIZE);
 }
 
-void	*get_page(size_t nb)
+void	*header_from_page(void *page)
+{
+	return (page - PAGE_HEADSIZE);
+}
+void	*page_from_header(void *page)
+{
+	return (page + PAGE_HEADSIZE);
+}
+
+void	link_pages(void *page1, void *page2)
+{
+	set_page_nextpage(page1, page2);
+	set_page_prevpage(page2, page1);
+}
+
+void	*extend_page(void *page, size_t nb)
+{
+	void	*new;
+
+	new = new_page(nb);
+	link_pages(page, new);
+	return (new);
+}
+
+void	*new_page(size_t nb)
 {
 	void	*page;
 	size_t	size;
 
 	size = nb * PAGE_SIZE;
-	page = getmap(size);
+	page = page_from_header(getmap(size));
 	init_page(page, size);
 	return (page);
 }
 
-void			*getXpages(const size_t x)
+void	*get_next_page(void *page)
 {
-	return (getmap(x * PAGE_SIZE));
+	return (get_page_nextpage(page));
 }
 
-void	dump_page(size_t *ptr)
+void	*get_prev_page(void *page)
 {
-	size_t	i;
+	return (get_page_prevpage(page));
+}
 
-	i = 0;
-	while (i < 8)
-	{
-		printf("%zu,", ptr[i]);
-		i++;
-	}
-	printf("\n");
+void	dump_page(size_t *page)
+{
+	if (page == NULL || header_from_page(page) == NULL)
+		return ;
+	printf("page:%p,", header_from_page(page));
+	printf("s:%zu,", get_page_size(page));
+	printf("t:%zu,", get_page_type(page));
+	printf("a:%zu,", get_page_allocations(page));
+	printf("np:%p,", get_page_nextpage(page));
+	printf("pp:%p,", get_page_prevpage(page));
+	printf("fs:%zu,", get_page_freespace(page));
+	printf("lfs:%zu,", get_page_largestfreespace(page));
+	printf("sfs:%zu\n", get_page_smallestfreespace(page));
 }
 
 /*
 
 freepage()
-
-linkpages()
 
 */

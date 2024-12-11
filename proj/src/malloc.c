@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/26 14:27:02 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:54:57 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	*mymalloc(size_t user_size)
 	size = set_chunk_size(user_size);
 	if (DEBUG)
 		printf("trying to allocate %zu bytes,", size);
+	/* need to incorporate a router here that manage which page use function of
+	requested size */
 	ptr = find_ffit_chunk(g_heap->tiny, size);
 	if (ptr == NULL)
 	{

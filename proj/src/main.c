@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/10 16:21:28 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:33:15 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,17 +150,23 @@ void	testpage()
 	void	*page;
 	size_t	nb;
 
-	nb = 2;
-	page = get_page(nb);
+	nb = 1;
+	extend_page(g_heap->tiny, nb);
+	page = g_heap->tiny;
+	dump_page(page);
+	page = get_next_page(page);
+	dump_page(page);
+	page = get_next_page(page);
 	dump_page(page);
 }
 
 int main(int ac, char **av)
 {
-	// testzarb();
-	// anotherweirdtest();
+	init_heap();
+	// testpage();
+	testzarb();
+	anotherweirdtest();
 	// writepointertest();
-	testpage();
 	(void)ac;
 	(void)av;
 	return (0);
