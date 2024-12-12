@@ -6,13 +6,13 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/11 11:54:57 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:03:15 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mymalloc.h>
 
-size_t	set_chunk_size(const size_t user_size)
+size_t	aligned_size(const size_t user_size)
 {
 	size_t	padding;
 
@@ -30,6 +30,21 @@ void	allocate(void *const ptr, const size_t size)
 	set_wormhole(prev_free_chunk(ptr), next_free_chunk(ptr));
 }
 
+void	*memory_manager(size_t size)
+{
+	t_ptype type;
+	void	*ptr;
+
+	if (size <= TINY_SIZE)
+		type = TINY;
+	else if (size <= MEDIUM_SIZE)
+		type = MEDIUM;
+	else
+		type = LARGE;
+	ptr = find_ffit_chunk(page_manager(type), size);
+	return (ptr);
+}
+
 void	*mymalloc(size_t user_size)
 {
 	void	*ptr = NULL;
@@ -39,12 +54,11 @@ void	*mymalloc(size_t user_size)
 		return (NULL);
 	if (g_heap == NULL)
 		init_heap();
-	size = set_chunk_size(user_size);
+	size = aligned_size(user_size);
 	if (DEBUG)
 		printf("trying to allocate %zu bytes,", size);
-	/* need to incorporate a router here that manage which page use function of
-	requested size */
-	ptr = find_ffit_chunk(g_heap->tiny, size);
+	ptr = memory_manager(size);
+	// ptr = find_ffit_chunk(g_heap->tiny, size);
 	if (ptr == NULL)
 	{
 		if (DEBUG)

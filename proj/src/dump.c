@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/11 10:52:17 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:24:54 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	dump_chunk(void *ptr)
 
 void	dump_heap(void *ptr)
 {
-	printf("heap state :\n");
+	printf("heap:\n");
 	while (get_chunk_size(ptr))
 	{
 		dump_chunk(ptr);

@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/11 12:33:15 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:59:11 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int main(int ac, char **av)
 	init_heap();
 	// testpage();
 	testzarb();
-	anotherweirdtest();
+	// anotherweirdtest();
 	// writepointertest();
 	(void)ac;
 	(void)av;

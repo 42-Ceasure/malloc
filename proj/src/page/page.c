@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/11 12:48:24 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:00:54 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ void	*getmap(const size_t len)
 
 void	set_page_size(size_t *page, size_t size)
 {
-	*(page + SIZE) = size;
-}
-void	set_page_type(size_t *page, size_t type)
-{
-	*(page + TYPE) = type;
+	*(page + SIZE) = size - PAGE_HEADSIZE;
 }
 void	set_page_allocations(size_t *page, size_t allocations)
 {
@@ -45,26 +41,10 @@ void	set_page_prevpage(size_t *page, size_t *prevpage)
 {
 	write_adress((page + PREVP), prevpage);
 }
-void	set_page_freespace(size_t *page, size_t freespace)
-{
-	*(page + FSPACE) = freespace;
-}
-void	set_page_largestfreespace(size_t *page, size_t largestfreespace)
-{
-	*(page + LFSPACE) = largestfreespace;
-}
-void	set_page_smallestfreespace(size_t *page, size_t smallestfreespace)
-{
-	*(page + SFSPACE) = smallestfreespace;
-}
 
 size_t	get_page_size(size_t *page)
 {
 	return (*(page + SIZE));
-}
-size_t	get_page_type(size_t *page)
-{
-	return (*(page + TYPE));
 }
 size_t	get_page_allocations(size_t *page)
 {
@@ -78,29 +58,13 @@ void	*get_page_prevpage(size_t *page)
 {
 	return (get_adress(page + PREVP));
 }
-size_t	get_page_freespace(size_t *page)
-{
-	return (*(page + FSPACE));
-}
-size_t	get_page_largestfreespace(size_t *page)
-{
-	return (*(page + LFSPACE));
-}
-size_t	get_page_smallestfreespace(size_t *page)
-{
-	return (*(page + SFSPACE));
-}
 
 void	init_page(void *page, size_t size)
 {
 	set_page_size(page, size);
-	set_page_type(page, 0);
 	set_page_allocations(page, 0);
 	set_page_nextpage(page, NULL);
 	set_page_prevpage(page, NULL);
-	set_page_freespace(page, size - PAGE_HEADSIZE);
-	set_page_largestfreespace(page, size - PAGE_HEADSIZE);
-	set_page_smallestfreespace(page, size - PAGE_HEADSIZE);
 }
 
 void	*header_from_page(void *page)
@@ -152,15 +116,24 @@ void	dump_page(size_t *page)
 {
 	if (page == NULL || header_from_page(page) == NULL)
 		return ;
-	printf("page:%p,", header_from_page(page));
+	printf("page:\n%p,", page);
 	printf("s:%zu,", get_page_size(page));
-	printf("t:%zu,", get_page_type(page));
 	printf("a:%zu,", get_page_allocations(page));
 	printf("np:%p,", get_page_nextpage(page));
 	printf("pp:%p,", get_page_prevpage(page));
-	printf("fs:%zu,", get_page_freespace(page));
-	printf("lfs:%zu,", get_page_largestfreespace(page));
-	printf("sfs:%zu\n", get_page_smallestfreespace(page));
+}
+
+void	*page_manager(t_ptype type)
+{
+	switch (type)
+	{
+		case TINY:
+			return (g_heap->tiny);
+		case MEDIUM:
+			return (g_heap->medium);
+		case LARGE:
+			return (g_heap->large);
+	}
 }
 
 /*

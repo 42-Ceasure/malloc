@@ -5,20 +5,24 @@ what is this project ?
 	to implement it in C.
 
 "heap"
-	/* to change
-		is initialised with an 8 byte header and an 8 bytes
-		footer which represents a size_t of 8 bytes.
-		The number is multiple of 16 and so the 61 most signifiant bits
-		represent the size of the chunk, while the 1 less signifiant bit 
-		represents the status (used or free) of the chunck
-	*/
+	The heap is represented by three memory mapping requested from 
+	system. One for both tiny and medium malloc which size range is 
+	to be defined, and another for large malloc which I think that 
+	will only track pointers.
+	The memory mapping sizes are always multiple of system pagesize.
+	So I get pages from system, that are initialised with a header. 
+	A global pointer on a static structure keep track of each memory 
+	areas roots. Headers describe pages and act as a linked list to 
+	track extended mapping for each allocation zones.
 
 "mymalloc"
-	/* to change
-		allocate requested memory on the "heap"
-		it searches for a large enough free chunk set its header and
-		footer, and split the chunk if it's size exceed the required size
-	*/
+		Sort allocations request by size to select memory zone where 
+		the allocation will be proceed. Allocate requested memory on 
+		that zone.
+		It searches for a large enough free chunk set its header 
+		and footer, and split the chunk if it's size exceed the 
+		required size
+
 "myfree"
 	/* to change
 		dealocate the chunck and merge it with the next chunk if it's
@@ -30,6 +34,7 @@ what is this project ?
 to do next:
 
 	tiny medium large gestion
+	free : find user chunk in different zones
 	set new page type
 	freepage ---> munmap
 	chunk manage page header

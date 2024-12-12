@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/26 10:34:54 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/12 06:48:44 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*reallocate(void *chk_ptr, size_t usr_size)
 
 	if (chk_ptr == NULL)
 		invalid_pointer();
-	size = set_chunk_size(usr_size);
+	size = aligned_size(usr_size);
 	if (size < get_chunk_size(chk_ptr))
 		allocate(chk_ptr, size);
 	else
@@ -66,7 +66,7 @@ void	*myrealloc(void *ptr, size_t usr_size)
 		return (mymalloc(usr_size));
 	else if (usr_size == 0)
 		myfree(ptr);
-	else if (usr_size == set_chunk_size(usr_size))
+	else if (usr_size == aligned_size(usr_size))
 		return (ptr);
 	else
 		return (reallocate(get_user_chunk(ptr), usr_size));

@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/11/26 11:44:28 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/12 09:25:31 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	*get_user_chunk(void *usr_ptr)
 {
 	void	*ptr;
 
+	// ici on doit definir une methode pour chercher dans les 3 heap,
+	// trouver une methode pour taper direct dans la bonne heap serait l'ideal
 	ptr = g_heap->tiny;
 	while (get_chunk_size(ptr))
 	{

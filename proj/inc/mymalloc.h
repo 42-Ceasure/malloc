@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/10 11:13:30 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/12 08:40:56 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@
 # define NBR			(0xFFFFFFF8)
 
 # define PAGE_SIZE		(getpagesize())
+# define DEFAULT_TINY	(2)
+# define DEFAULT_MEDIUM	(8)
+# define DEFAULT_LARGE	(1)
+
+# define TINY_SIZE		(64)
+# define MEDIUM_SIZE	(256)
 
 typedef	struct	s_heap
 {
@@ -52,7 +58,7 @@ typedef	struct	s_heap
 
 extern	t_heap	*g_heap;
 
-size_t	set_chunk_size(const size_t user_size);
+size_t	aligned_size(const size_t user_size);
 void	allocate(void *const ptr, const size_t size);
 void	*mymalloc(size_t user_size);
 
