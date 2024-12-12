@@ -33,6 +33,9 @@ what is this project ?
 
 to do next:
 
+	page that track alloc / or / heap adress ranges.
+	
+
 	tiny medium large gestion
 	free : find user chunk in different zones
 	set new page type
