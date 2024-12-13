@@ -6,11 +6,11 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/12 12:00:54 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:15:07 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mymalloc.h>
+#include <page.h>
 
 void	*getmap(const size_t len)
 {
@@ -59,7 +59,7 @@ void	*get_page_prevpage(size_t *page)
 	return (get_adress(page + PREVP));
 }
 
-void	init_page(void *page, size_t size)
+void	init_page_header(void *page, size_t size)
 {
 	set_page_size(page, size);
 	set_page_allocations(page, 0);
@@ -82,12 +82,16 @@ void	link_pages(void *page1, void *page2)
 	set_page_prevpage(page2, page1);
 }
 
-void	*extend_page(void *page, size_t nb)
+void	*extend_page(void *page)
 {
+	void	*end;
 	void	*new;
 
-	new = new_page(nb);
-	link_pages(page, new);
+	new = new_page(get_page_size(page));
+	end = page;
+	while (get_next_page(end))
+		end = get_next_page(end);
+	link_pages(end, new);
 	return (new);
 }
 
@@ -98,7 +102,8 @@ void	*new_page(size_t nb)
 
 	size = nb * PAGE_SIZE;
 	page = page_from_header(getmap(size));
-	init_page(page, size);
+	init_page_header(page, size);
+	init_page_chunks(page, size - PAGE_HEADSIZE);
 	return (page);
 }
 
@@ -110,30 +115,6 @@ void	*get_next_page(void *page)
 void	*get_prev_page(void *page)
 {
 	return (get_page_prevpage(page));
-}
-
-void	dump_page(size_t *page)
-{
-	if (page == NULL || header_from_page(page) == NULL)
-		return ;
-	printf("page:\n%p,", page);
-	printf("s:%zu,", get_page_size(page));
-	printf("a:%zu,", get_page_allocations(page));
-	printf("np:%p,", get_page_nextpage(page));
-	printf("pp:%p,", get_page_prevpage(page));
-}
-
-void	*page_manager(t_ptype type)
-{
-	switch (type)
-	{
-		case TINY:
-			return (g_heap->tiny);
-		case MEDIUM:
-			return (g_heap->medium);
-		case LARGE:
-			return (g_heap->large);
-	}
 }
 
 /*

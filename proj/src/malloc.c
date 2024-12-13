@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/12 13:03:15 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:20:12 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ size_t	aligned_size(const size_t user_size)
 	return (user_size + padding + DATA_SIZE);
 }
 
+size_t	check_user_size(const size_t user_size)
+{
+	if (user_size < 1)
+		return (0);
+	return (aligned_size(user_size));
+}
+
 void	allocate(void *const ptr, const size_t size)
 {
 	if (get_chunk_size(ptr) != size)
@@ -30,10 +37,9 @@ void	allocate(void *const ptr, const size_t size)
 	set_wormhole(prev_free_chunk(ptr), next_free_chunk(ptr));
 }
 
-void	*memory_manager(size_t size)
+t_atype	type_manager(size_t size)
 {
-	t_ptype type;
-	void	*ptr;
+	t_atype type;
 
 	if (size <= TINY_SIZE)
 		type = TINY;
@@ -41,24 +47,30 @@ void	*memory_manager(size_t size)
 		type = MEDIUM;
 	else
 		type = LARGE;
-	ptr = find_ffit_chunk(page_manager(type), size);
-	return (ptr);
+	return (type);
 }
 
 void	*mymalloc(size_t user_size)
 {
 	void	*ptr = NULL;
 	size_t	size;
+	t_atype	type;
 
-	if (user_size < 1)
+	size = check_user_size(user_size);
+	if (size == 0)
 		return (NULL);
-	if (g_heap == NULL)
-		init_heap();
-	size = aligned_size(user_size);
 	if (DEBUG)
 		printf("trying to allocate %zu bytes,", size);
-	ptr = memory_manager(size);
-	// ptr = find_ffit_chunk(g_heap->tiny, size);
+	type = type_manager(size);
+	ptr = heap_manager(type);
+	/*
+		on a maintenant la bonne heap. 
+		il va falloir rajouter la capacite d'etendre la heap
+		si elle est pleine. pour ca, quelqu'un va devoir call
+		le page manager. a voir a qui donner cette responsabilite.
+		peut etre le finder.
+	*/
+	ptr = find_ffit_chunk(ptr, size);
 	if (ptr == NULL)
 	{
 		if (DEBUG)

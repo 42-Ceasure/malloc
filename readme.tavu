@@ -4,54 +4,23 @@ what is this project ?
 	There was no language requirements, but that sound legit for me
 	to implement it in C.
 
-"heap"
-	The heap is represented by three memory mapping requested from 
-	system. One for both tiny and medium malloc which size range is 
-	to be defined, and another for large malloc which I think that 
-	will only track pointers.
-	The memory mapping sizes are always multiple of system pagesize.
-	So I get pages from system, that are initialised with a header. 
-	A global pointer on a static structure keep track of each memory 
-	areas roots. Headers describe pages and act as a linked list to 
-	track extended mapping for each allocation zones.
-
-"mymalloc"
-		Sort allocations request by size to select memory zone where 
-		the allocation will be proceed. Allocate requested memory on 
-		that zone.
-		It searches for a large enough free chunk set its header 
-		and footer, and split the chunk if it's size exceed the 
-		required size
-
-"myfree"
-	/* to change
-		dealocate the chunck and merge it with the next chunk if it's
-		free, then do the same with the previous chunk
-	*/
-"dump_heap"
-	prints the actual state of the heap, listing chunks.
-
 to do next:
 
-	page that track alloc / or / heap adress ranges.
-	
-
+	extend full heap
+	method for free to check ptr
+	page that track alloc / or / heap adress ranges ?
 	tiny medium large gestion
 	free : find user chunk in different zones
-	set new page type
 	freepage ---> munmap
 	chunk manage page header
 
-	test realloc
-		- reallocate more elsewhere should check the prev chunk,
-		if it's free and large enough, it can merge it then move mem
+	realloc
+
 	find
 	- implement find next fit
 	- implement find best fit
 	- implement find ...
 
-	- implement usage of munmap
-	
-	munmap
-	sysconf
-	getrlimit
+munmap
+sysconf
+getrlimit

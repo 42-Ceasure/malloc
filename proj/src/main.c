@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/12 12:59:11 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:21:14 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	testzarb()
 		ptr[i] = mymalloc(i * 8);
 		i++;
 	}
-	dump_heap(g_heap->tiny);
+	dump_heap();
 	i = 0;
 	while (i < TEST)
 	{
@@ -37,19 +37,19 @@ void	testzarb()
 		}
 		i++;
 	}
-	dump_heap(g_heap->tiny);
+	dump_heap();
 	i = 0;
 	ptr2[i] = mymalloc(5953);
-	dump_heap(g_heap->tiny);
+	dump_heap();
 	myfree(ptr2[i]);
 	ptr2[i++] = NULL;
-	dump_heap(g_heap->tiny);
+	dump_heap();
 	ptr2[i++] = mymalloc(1);
 	ptr2[i++] = mymalloc(1);
 	ptr2[i++] = mymalloc(1);
 	ptr2[i++] = mymalloc(1);
 	ptr2[i++] = mymalloc(16);
-	dump_heap(g_heap->tiny);
+	dump_heap();
 	ptr2[i++] = mymalloc(112);
 	ptr2[i++] = mymalloc(140);
 	ptr2[i++] = mymalloc(16);
@@ -64,7 +64,7 @@ void	testzarb()
 	ptr2[i++] = mymalloc(5000);
 	ptr2[i++] = mymalloc(15);
 	ptr2[i++] = mymalloc(123);
-	dump_heap(g_heap->tiny);
+	dump_heap();
 	i = 0;
 	while (i < TEST)
 	{
@@ -72,7 +72,7 @@ void	testzarb()
 		myfree(ptr2[i]);
 		i++;
 	}
-	dump_heap(g_heap->tiny);
+	dump_heap();
 	printf("leaving %s\n-----\n", __func__);
 }
 
@@ -85,7 +85,7 @@ void	anotherweirdtest()
 	if (ptr != NULL)
 	{
 		printf("pointer tab initialised\n");
-		dump_heap(g_heap->tiny);
+		dump_heap();
 /* ************************************************************************** */
 
 		while (i < TEST)
@@ -104,23 +104,23 @@ void	anotherweirdtest()
 			}
 			i++;
 		}
-		dump_heap(g_heap->tiny);
+		dump_heap();
 		while(i)
 			myfree(ptr[--i]);
 
 /* ************************************************************************** */
 		myfree(ptr);
 	}
-	dump_heap(g_heap->tiny);
+	dump_heap();
 
 /* ************************** testing realloc ******************************* */
 	ptr[0] = mymalloc(45);
 	ptr[1] = mymalloc(45);
 	ptr[2] = mymalloc(45);
 	ptr[3] = mymalloc(45);
-	dump_heap(g_heap->tiny);
+	dump_heap();
 	myrealloc(ptr[0], 68);
-	dump_heap(g_heap->tiny);
+	dump_heap();
 }
 
 void	writepointertest()
@@ -147,22 +147,11 @@ void	writepointertest()
 
 void	testpage()
 {
-	void	*page;
-	size_t	nb;
-
-	nb = 1;
-	extend_page(g_heap->tiny, nb);
-	page = g_heap->tiny;
-	dump_page(page);
-	page = get_next_page(page);
-	dump_page(page);
-	page = get_next_page(page);
-	dump_page(page);
+	return ;
 }
 
 int main(int ac, char **av)
 {
-	init_heap();
 	// testpage();
 	testzarb();
 	// anotherweirdtest();
