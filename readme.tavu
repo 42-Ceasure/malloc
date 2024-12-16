@@ -6,15 +6,15 @@ what is this project ?
 
 to do next:
 
-	extend full heap
-	method for free to check ptr
-	page that track alloc / or / heap adress ranges ?
-	tiny medium large gestion
-	free : find user chunk in different zones
-	freepage ---> munmap
-	chunk manage page header
+	rework realloc !!!
 
-	realloc
+	better method for free to check ptr ?
+
+	page that track alloc / or / heap adress ranges ?
+	
+	large gestion
+	
+	freepage ---> munmap
 
 	find
 	- implement find next fit
