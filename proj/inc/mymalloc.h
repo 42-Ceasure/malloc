@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/13 17:52:46 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:37:20 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,20 @@
 /* **************** */
 
 # include <heap.h>
+# include <chunk.h>
+# include <page.h>
 
 # define DEBUG			(1)
 
 extern	t_heap	*g_heap;
 
 size_t	aligned_size(const size_t user_size);
-void	allocate(void *const ptr, const size_t size);
+void	allocate(void *heap, void *const ptr, const size_t size);
 void	*mymalloc(size_t user_size);
 
 void	*myrealloc(void *ptr, size_t size);
 
-void	deallocate(void *ptr);
+void	deallocate(void *start, void *ptr);
 void	myfree(void *ptr);
 
 void	dump_chunk_datas(void *ptr);

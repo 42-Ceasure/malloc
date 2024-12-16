@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/13 16:56:23 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:10:25 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,19 @@ t_heap *g_heap = NULL;
 void	init_tiny(void)
 {
 	g_heap->tiny = new_page(DEFAULT_TINY);
+	init_page_chunks(g_heap->tiny, get_page_usable_size(g_heap->tiny));
 }
 
 void	init_medium(void)
 {
 	g_heap->medium = new_page(DEFAULT_MEDIUM);
+	init_page_chunks(g_heap->medium, get_page_usable_size(g_heap->medium));
 }
 
 void	init_large(void)
 {
 	g_heap->large = new_page(DEFAULT_LARGE);
+	init_page_chunks(g_heap->large, get_page_usable_size(g_heap->large));
 }
 
 void	init_heap(void)

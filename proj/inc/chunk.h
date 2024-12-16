@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:38:02 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/13 17:17:17 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:22:17 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ void	*find_lfit_chunk(void *ptr, const size_t size);
 void	*get_user_chunk(void *usr_ptr);
 void	*merge_chunks(void *const ptr1, void *ptr2, const size_t status);
 void	split_chunk(void *const ptr, const size_t size);
+void	*chunk_manager(void *page, size_t size);
 
-void	*jump_prev_free_chunk(void *ptr);
-void	*prev_free_chunk(void *ptr);
-void	*prev_chunk(void *ptr);
+void	*jump_prev_free_chunk(void *start, void *ptr);
+void	*prev_free_chunk(void *start, void *ptr);
+void	*prev_chunk(void *start, void *ptr);
 
 void	*jump_next_free_chunk(void *ptr);
 void	*next_free_chunk(void *ptr);

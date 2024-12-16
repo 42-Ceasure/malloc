@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:55:51 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/13 17:16:21 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/16 08:33:14 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 # include <stddef.h>
 # include <sys/mman.h>
 # include <unistd.h>
+# include <stdio.h>
 
-# include <chunk.h>
 # include <data.h>
+# include <chunk.h>
 
 # define PAGE_SIZE		(getpagesize())
 # define PAGE_ELEMENTS	(8)
@@ -33,6 +34,7 @@
 
 
 size_t	get_page_size(size_t *page);
+size_t	get_page_usable_size(size_t *page);
 size_t	get_page_allocations(size_t *page);
 void	*get_page_nextpage(size_t *page);
 void	*get_page_prevpage(size_t *page);
@@ -40,7 +42,9 @@ void	*new_page(size_t nb);
 void	*extend_page(void *page);
 void	*get_next_page(void *page);
 void	*get_prev_page(void *page);
+size_t	is_page_inited(void *page);
 void	*header_from_page(void *page);
+void	*page_manager(void *page);
 
 void	dump_page(size_t *page);
 

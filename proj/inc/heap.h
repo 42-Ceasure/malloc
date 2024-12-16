@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:50:13 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/13 17:12:51 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/16 07:12:24 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stddef.h>
 
 # include <page.h>
+# include <chunk.h>
 
 # define DEFAULT_TINY	(2)
 # define DEFAULT_MEDIUM	(8)

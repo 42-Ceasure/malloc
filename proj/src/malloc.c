@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/13 18:20:12 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:48:59 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ size_t	check_user_size(const size_t user_size)
 	return (aligned_size(user_size));
 }
 
-void	allocate(void *const ptr, const size_t size)
+void	allocate(void *heap, void *const ptr, const size_t size)
 {
 	if (get_chunk_size(ptr) != size)
 		split_chunk(ptr, size);
 	set_chunk(ptr, size, CHUNK_USED);
-	set_wormhole(prev_free_chunk(ptr), next_free_chunk(ptr));
+	set_wormhole(prev_free_chunk(heap, ptr), next_free_chunk(ptr));
 }
 
 t_atype	type_manager(size_t size)
@@ -53,6 +53,7 @@ t_atype	type_manager(size_t size)
 void	*mymalloc(size_t user_size)
 {
 	void	*ptr = NULL;
+	void	*heap;
 	size_t	size;
 	t_atype	type;
 
@@ -62,15 +63,14 @@ void	*mymalloc(size_t user_size)
 	if (DEBUG)
 		printf("trying to allocate %zu bytes,", size);
 	type = type_manager(size);
-	ptr = heap_manager(type);
-	/*
-		on a maintenant la bonne heap. 
-		il va falloir rajouter la capacite d'etendre la heap
-		si elle est pleine. pour ca, quelqu'un va devoir call
-		le page manager. a voir a qui donner cette responsabilite.
-		peut etre le finder.
-	*/
-	ptr = find_ffit_chunk(ptr, size);
+	heap = heap_manager(type);
+	if (type != LARGE)
+		ptr = chunk_manager(heap, size);
+	else
+	{
+		// big alloc;
+		return (NULL);
+	}
 	if (ptr == NULL)
 	{
 		if (DEBUG)
@@ -79,6 +79,6 @@ void	*mymalloc(size_t user_size)
 	}
 	if (DEBUG)
 		printf(" space found at %p\n", ptr);
-	allocate(ptr, size);
+	allocate(heap, ptr, size);
 	return (usrptr_from_chkptr(ptr));
 }

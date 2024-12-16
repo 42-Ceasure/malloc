@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/13 18:21:14 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:47:48 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ void	anotherweirdtest()
 	dump_heap();
 
 /* ************************** testing realloc ******************************* */
-	ptr[0] = mymalloc(45);
-	ptr[1] = mymalloc(45);
-	ptr[2] = mymalloc(45);
-	ptr[3] = mymalloc(45);
-	dump_heap();
-	myrealloc(ptr[0], 68);
+	// ptr[0] = mymalloc(45);
+	// ptr[1] = mymalloc(45);
+	// ptr[2] = mymalloc(45);
+	// ptr[3] = mymalloc(45);
+	// dump_heap();
+	// myrealloc(ptr[0], 68);
 	dump_heap();
 }
 
@@ -150,11 +150,33 @@ void	testpage()
 	return ;
 }
 
+void	testspam()
+{
+	size_t spamnb = 600;
+	size_t i = 0;
+	void *ptr[spamnb];
+
+	while (i < spamnb)
+	{
+		ptr[i] = mymalloc(48);
+		i++;
+	}
+	dump_heap();
+	i = 0;
+	while (i < spamnb)
+	{
+		ptr[i] = mymalloc(48);
+		i++;
+	}
+	dump_heap();
+}
+
 int main(int ac, char **av)
 {
 	// testpage();
-	testzarb();
-	// anotherweirdtest();
+	// testspam();
+	// testzarb();
+	anotherweirdtest();
 	// writepointertest();
 	(void)ac;
 	(void)av;

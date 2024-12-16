@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/13 17:55:00 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/16 09:36:24 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,22 @@ void	dump_page(size_t *page)
 {
 	if (page == NULL || header_from_page(page) == NULL)
 		return ;
+	printf("page:");
+	printf("%p,", page);
+	printf("pp:%p,", get_page_prevpage(page));
+	printf("s:%zu,", get_page_size(page));
+	printf("a:%zu,", get_page_allocations(page));
+	printf("np:%p\n", get_page_nextpage(page));
+}
+
+void	dump_pages(void *page)
+{
+	if (page == NULL || header_from_page(page) == NULL)
+		return ;
 	while (page != NULL)
 	{
-		printf("page:");
-		printf("%p,", page);
-		printf("pp:%p,", get_page_prevpage(page));
-		printf("s:%zu,", get_page_size(page));
-		printf("a:%zu,", get_page_allocations(page));
-		printf("np:%p\n", get_page_nextpage(page));
+		dump_page(page);
+		dump_chunks(page);
 		page = get_next_page(page);
 	}
 }
@@ -73,12 +81,9 @@ void	dump_heap(void)
 	void	*ptr;
 
 	ptr = heap_manager(TINY);
-	dump_page(ptr);
-	dump_chunks(ptr);
+	dump_pages(ptr);
 	ptr = heap_manager(MEDIUM);
-	dump_page(ptr);
-	dump_chunks(ptr);
+	dump_pages(ptr);
 	ptr = heap_manager(LARGE);
-	dump_page(ptr);
-	dump_chunks(ptr);
+	dump_pages(ptr);
 }
