@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/16 11:48:43 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:18:48 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,25 @@ void	*get_user_chunk_in(void *page, void *usr_ptr)
 	{
 		ptr = search_chunk_in_page(page, usr_ptr);
 		if (ptr != NULL)
-			return (ptr);
+			return (page);
 		page = get_next_page(page);
 	}
 	return (NULL);
 }
 
-void	*get_user_chunk(void *usr_ptr)
+void	*get_user_page(void *usr_ptr)
 {
-	void	*ptr;
+	void	*page;
 
-	ptr = get_user_chunk_in(heap_manager(TINY), usr_ptr);
-	if (ptr != NULL)
-		return (heap_manager(TINY));
-	ptr = get_user_chunk_in(heap_manager(MEDIUM), usr_ptr);
-	if (ptr != NULL)
-		return (heap_manager(MEDIUM));
-	ptr = get_user_chunk_in(heap_manager(LARGE), usr_ptr);
-	if (ptr != NULL)
-		return (heap_manager(LARGE));
+	page = get_user_chunk_in(heap_manager(TINY), usr_ptr);
+	if (page != NULL)
+		return (page);
+	page = get_user_chunk_in(heap_manager(MEDIUM), usr_ptr);
+	if (page != NULL)
+		return (page);
+	page = get_user_chunk_in(heap_manager(LARGE), usr_ptr);
+	if (page != NULL)
+		return (page);
 	return (NULL);
 }
 
@@ -71,20 +71,23 @@ void	split_chunk(void *const ptr, const size_t size)
 		set_wormhole(ptr + size, next_free_chunk(ptr));
 }
 
-void	*chunk_manager(void *page, size_t size)
+void	*chunk_manager(void **page, size_t size)
 {
 	void	*ptr = NULL;
 
 	while (page)
 	{
-		ptr = find_ffit_chunk(page, size);
+		ptr = find_ffit_chunk(*page, size);
 		if (ptr != NULL)
+		{
+			
 			return (ptr);
+		}
 		else
 		{
-			page = page_manager(page);
-			if (!is_page_inited(page))
-				init_page_chunks(page, get_page_usable_size(page));
+			*page = page_manager(*page);
+			if (!is_page_inited(*page))
+				init_page_chunks(*page, get_page_usable_size(*page));
 		}
 	}
 	return (NULL);

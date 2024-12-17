@@ -6,20 +6,36 @@ what is this project ?
 
 to do next:
 
+	large gestion
+		* problem : dump large chunk don't print the good user ptr, cuz of
+		usrptr_from_chkptr that dont work in that particular case
+		-> the real user ptr isnt in the chunk
+		* problem : free dont find the userptr for large alloc, cuz it don't
+		check at the good place
+
 	rework realloc !!!
 
-	better method for free to check ptr ?
 
-	page that track alloc / or / heap adress ranges ?
-	
-	large gestion
-	
-	freepage ---> munmap
+	freepage ---> munmap	
+
+	better method for free to check ptr ?
 
 	find
 	- implement find next fit
 	- implement find best fit
 	- implement find ...
+
+	page that track alloc / or / heap adress ranges ?
+
+* rework Makefile to fill subject.
+* be sure there is no norm
+* MAKEFILE doit
+	utiliser HOSTTYPE pour definir le nom de la lib 
+		- libft_malloc_$HOSTTYPE.so
+	creer un lien symbolique libft_malloc.so qui pointe vers
+	libft_malloc_$HOSTTYPE.so
+* la librairie doit exporter les fonctions malloc, free, realloc et show_alloc_mem
+ 
 
 munmap
 sysconf

@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:55:51 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/16 08:33:14 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:12:15 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,17 @@
 // # define LAST		-2
 # define NEXTP			-1
 
+void	*getmap(const size_t len);
 
+void	inc_page_allocations(size_t *page);
+void	dec_page_allocation(size_t *page);
 size_t	get_page_size(size_t *page);
 size_t	get_page_usable_size(size_t *page);
 size_t	get_page_allocations(size_t *page);
 void	*get_page_nextpage(size_t *page);
 void	*get_page_prevpage(size_t *page);
 void	*new_page(size_t nb);
+void	*new_specific_page(size_t size);
 void	*extend_page(void *page);
 void	*get_next_page(void *page);
 void	*get_prev_page(void *page);

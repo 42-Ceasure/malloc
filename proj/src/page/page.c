@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/16 09:37:27 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:15:41 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*getmap(const size_t len)
 				len,
 				PROT_READ | PROT_WRITE,
 				MAP_PRIVATE | MAP_ANONYMOUS,
-				0,
+				-1,
 				0);
 	return (map);
 }
@@ -32,6 +32,14 @@ void	set_page_size(size_t *page, size_t size)
 void	set_page_allocations(size_t *page, size_t allocations)
 {
 	*(page + ALLOC) = allocations;
+}
+void	inc_page_allocations(size_t *page)
+{
+	set_page_allocations(page, get_page_allocations(page) + 1);
+}
+void	dec_page_allocation(size_t *page)
+{
+	set_page_allocations(page, get_page_allocations(page) - 1);
 }
 void	set_page_nextpage(size_t *page, size_t *nextpage)
 {
@@ -119,6 +127,15 @@ void	*new_page(size_t nb)
 	page = page_from_header(getmap(size));
 	init_page_header(page, size);
 	return (page);
+}
+
+void	*new_specific_page(size_t size)
+{
+	size_t	nb = 0;
+
+	while ((nb * PAGE_SIZE) < size)
+		nb++;
+	return (getmap(nb));
 }
 
 void	*get_next_page(void *page)

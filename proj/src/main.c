@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/16 11:47:48 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:25:10 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	testzarb()
 	}
 	dump_heap();
 	i = 0;
-	ptr2[i] = mymalloc(5953);
+	ptr2[i++] = mymalloc(5953);
 	dump_heap();
-	myfree(ptr2[i]);
-	ptr2[i++] = NULL;
+	// myfree(ptr2[i]);
+	// ptr2[i++] = NULL;
 	dump_heap();
 	ptr2[i++] = mymalloc(1);
 	ptr2[i++] = mymalloc(1);
@@ -100,7 +100,7 @@ void	anotherweirdtest()
 					j++;
 				}
 				ptr[i][j] = '\0';
-				printf("%s\n", ptr[i]);
+				// printf("%s\n", ptr[i]);
 			}
 			i++;
 		}
@@ -120,7 +120,7 @@ void	anotherweirdtest()
 	// ptr[3] = mymalloc(45);
 	// dump_heap();
 	// myrealloc(ptr[0], 68);
-	dump_heap();
+	// dump_heap();
 }
 
 void	writepointertest()
@@ -171,13 +171,22 @@ void	testspam()
 	dump_heap();
 }
 
+void	testlargealloc(char *nbr)
+{
+	void	*ptr;
+
+	ptr = mymalloc(atoi(nbr));
+}
+
 int main(int ac, char **av)
 {
 	// testpage();
 	// testspam();
-	// testzarb();
-	anotherweirdtest();
+	testzarb();
+	// anotherweirdtest();
 	// writepointertest();
+	// if (ac > 1)
+	// 	testlargealloc(av[1]);
 	(void)ac;
 	(void)av;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/16 11:41:50 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:26:44 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@
 // 	return (new);
 // }
 
-// void	*reallocate(void *chk_ptr, size_t usr_size)
+// void	*reallocate(void *page, void *chk_ptr, size_t usr_size)
 // {
 // 	size_t	size;
 // 	void	*next;
 
-// 	if (chk_ptr == NULL)
+// 	if (page == NULL)
 // 		invalid_pointer();
 // 	size = aligned_size(usr_size);
 // 	if (size < get_chunk_size(chk_ptr))
@@ -69,6 +69,6 @@
 // 	else if (usr_size == aligned_size(usr_size))
 // 		return (ptr);
 // 	else
-// 		return (reallocate(get_user_chunk(ptr), usr_size));
+// 		return (reallocate(get_user_page(ptr), ptr, usr_size));
 // 	return (NULL);
 // }
