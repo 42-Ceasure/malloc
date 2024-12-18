@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:55:51 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/17 14:12:15 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/18 08:48:53 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@
 # include <chunk.h>
 
 # define PAGE_SIZE		(getpagesize())
-# define PAGE_ELEMENTS	(8)
+# define PAGE_ELEMENTS	(4)
 # define PAGE_HEADSIZE	(PAGE_ELEMENTS * sizeof(size_t))
 
-# define PREVP			-8
-// # define FIRST		-7
-# define SIZE			-4
-# define ALLOC			-3
-// # define LAST		-2
+# define PREVP			-4
+# define SIZE			-3
+# define ALLOC			-2
 # define NEXTP			-1
 
 void	*getmap(const size_t len);

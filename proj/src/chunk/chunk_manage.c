@@ -6,52 +6,11 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/17 10:18:48 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/18 09:48:45 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mymalloc.h>
-
-void	*search_chunk_in_page(void *ptr, void *usr_ptr)
-{
-	while (get_chunk_size(ptr))
-	{
-		if (ptr == chkptr_from_usrptr(usr_ptr))
-			return (ptr);
-		ptr = next_chunk(ptr);
-	}
-	return (NULL);
-}
-
-void	*get_user_chunk_in(void *page, void *usr_ptr)
-{
-	void	*ptr;
-
-	while (page)
-	{
-		ptr = search_chunk_in_page(page, usr_ptr);
-		if (ptr != NULL)
-			return (page);
-		page = get_next_page(page);
-	}
-	return (NULL);
-}
-
-void	*get_user_page(void *usr_ptr)
-{
-	void	*page;
-
-	page = get_user_chunk_in(heap_manager(TINY), usr_ptr);
-	if (page != NULL)
-		return (page);
-	page = get_user_chunk_in(heap_manager(MEDIUM), usr_ptr);
-	if (page != NULL)
-		return (page);
-	page = get_user_chunk_in(heap_manager(LARGE), usr_ptr);
-	if (page != NULL)
-		return (page);
-	return (NULL);
-}
 
 void	*merge_chunks(void *const ptr1, void *const ptr2, const size_t status)
 {
