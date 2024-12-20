@@ -6,166 +6,149 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/18 10:59:58 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:05:05 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mymalloc.h>
+#include <page.h>
 
-void	*getmap(const size_t len)
+/*-- "private"  --*/
+static void		*get_adress(size_t *adress)
 {
-	void	*map;
+	return ((void *)*adress);
+}
+static void		write_adress(size_t *where, size_t *adress)
+{
+	*where = (size_t)adress;
+}
 
-	map = mmap(	NULL,
+static void		*new_map(const size_t len)
+{
+	return (mmap(	NULL,
 				len,
 				PROT_READ | PROT_WRITE,
 				MAP_PRIVATE | MAP_ANONYMOUS,
 				-1,
-				0);
-	return (map);
+				0)); // return ptr on success, (void *)-1 on error. set errno
+}
+static void		del_map(void *page, const size_t len)
+{
+	munmap(page, len); // ret 0 on success, -1 on error. set errno
 }
 
-void	set_page_size(size_t *page, size_t size)
+static void		*get_page_prevpage(size_t *page)
 {
-	*(page + SIZE) = size;
+	return (get_adress(page + PAGEPREV));
 }
-void	set_page_allocations(size_t *page, size_t allocations)
+static void		set_page_prevpage(size_t *page, size_t *prevpage)
 {
-	*(page + ALLOC) = allocations;
-}
-void	inc_page_allocations(size_t *page)
-{
-	set_page_allocations(page, get_page_allocations(page) + 1);
-}
-void	dec_page_allocation(size_t *page)
-{
-	set_page_allocations(page, get_page_allocations(page) - 1);
-}
-void	set_page_nextpage(size_t *page, size_t *nextpage)
-{
-	write_adress((page + NEXTP), nextpage);
-}
-void	set_page_prevpage(size_t *page, size_t *prevpage)
-{
-	write_adress((page + PREVP), prevpage);
-}
-void	set_page_to_init(void *page)
-{
-	write_adress(page, NULL);
+	write_adress(page + PAGEPREV, prevpage);
 }
 
-size_t	get_page_size(size_t *page)
+static void		*get_page_nextpage(size_t *page)
 {
-	return (*(page + SIZE));
+	return (get_adress(page + PAGENEXT));
 }
-size_t	get_page_usable_size(size_t *page)
+static void		set_page_nextpage(size_t *page, size_t *nextpage)
 {
-	return (*(page + SIZE) - PAGE_HEADSIZE);
-}
-size_t	get_page_allocations(size_t *page)
-{
-	return (*(page + ALLOC));
-}
-void	*get_page_nextpage(size_t *page)
-{
-	return (get_adress(page + NEXTP));
-}
-void	*get_page_prevpage(size_t *page)
-{
-	return (get_adress(page + PREVP));
-}
-size_t	is_page_inited(void *page)
-{
-	if (get_adress(page) != NULL)
-		return (1);
-	return (0);
+	write_adress(page + PAGENEXT, nextpage);
 }
 
-void	init_page_header(void *page, size_t size)
+static size_t	get_page_size(size_t *page)
 {
-	set_page_size(page, size);
-	set_page_allocations(page, 0);
-	set_page_nextpage(page, NULL);
+	return (*(page + PAGESIZE));
+}
+static void		set_page_size(size_t *page, const size_t size)
+{
+	*(page + PAGESIZE) = size;
+}
+
+static size_t	get_page_type(size_t *page)
+{
+	return (*(page + PAGETYPE));
+}
+static void		set_page_type(size_t *page, const size_t type)
+{
+	*(page + PAGETYPE) = type;
+}
+
+static size_t	get_page_alloc(size_t *page)
+{
+	return (*(page + PAGEALLOC));
+}
+static void		set_page_alloc(size_t *page, const size_t alloc)
+{
+	*(page + PAGEALLOC) = alloc;
+}
+
+
+/*--- "public" ---*/
+void			*new_page(const size_t nb)
+{
+	return (new_map(nb * SYS_PAGESIZE));
+}
+void			del_page(void *page)
+{
+	del_map(page, get_page_size(page));
+}
+
+void			init_page(void *page, const size_t size, const size_t type)
+{
 	set_page_prevpage(page, NULL);
-	set_page_to_init(page);
+	set_page_nextpage(page, NULL);
+	set_page_size(page, size);
+	set_page_type(page, type);
+	set_page_alloc(page, 0);
 }
 
-void	*header_from_page(void *page)
+void			*get_page_linked(void *page, t_pe element)
 {
-	return (page - PAGE_HEADSIZE);
+	switch (element)
+	{
+		case PREV:
+			return (get_page_prevpage(page));
+		case NEXT:
+			return (get_page_nextpage(page));
+		default:
+			return (NULL);
+	}
 }
-void	*page_from_header(void *page)
+size_t			get_page_info(void *page, t_pe element)
 {
-	return (page + PAGE_HEADSIZE);
+	switch (element)
+	{
+		case SIZE:
+			return (get_page_size(page));
+		case TYPE:
+			return (get_page_type(page));
+		case ALLOC:
+			return (get_page_alloc(page));
+		default:
+			return (0);
+	}
 }
 
-void	link_pages(void *page1, void *page2)
+void			increment_page_alloc(void *page)
+{
+	set_page_alloc(page, (get_page_alloc(page) + 1));
+}
+void			decrement_page_alloc(void *page)
+{
+	set_page_alloc(page, (get_page_alloc(page) - 1));
+}
+void			link_pages(void *page1, void *page2)
 {
 	set_page_nextpage(page1, page2);
 	set_page_prevpage(page2, page1);
 }
 
-void	*extend_page(void *page)
+void			dump_page(void *page)
 {
-	void	*end;
-	void	*new;
-
-	new = new_page(get_page_size(page) / PAGE_SIZE);
-	end = page;
-	while (get_next_page(end))
-		end = get_next_page(end);
-	link_pages(end, new);
-	return (new);
+	printf("page:%p, ", page);
+	printf("prev:%p, ", get_page_linked(page, PREV));
+	printf("next:%p, ", get_page_linked(page, NEXT));
+	printf("size:%zu, ", get_page_info(page, SIZE));
+	printf("type:%zu, ", get_page_info(page, TYPE));
+	printf("alloc:%zu, ", get_page_info(page, ALLOC));
+	printf("\n");
 }
-
-void	*new_page(size_t nb)
-{
-	void	*page;
-	size_t	size;
-
-	size = nb * PAGE_SIZE;
-	page = page_from_header(getmap(size));
-	init_page_header(page, size);
-	return (page);
-}
-
-void	*new_specific_page(size_t size)
-{
-	size_t	nb = 0;
-
-	while ((nb * PAGE_SIZE) < size)
-		nb++;
-	return (getmap(nb));
-}
-
-void	*get_next_page(void *page)
-{
-	return (get_page_nextpage(page));
-}
-
-void	*get_prev_page(void *page)
-{
-	return (get_page_prevpage(page));
-}
-
-void	*page_manager(void *page)
-{
-	void	*next;
-
-	next = get_next_page(page);
-	if (next == NULL)
-	{
-		page = extend_page(page);
-		if (page == NULL)
-			return (NULL);
-	}
-	else
-		page = next;
-	return (page);
-}
-
-/*
-
-freepage()
-
-*/

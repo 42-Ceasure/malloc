@@ -15,12 +15,11 @@ OBJDIR		=	./obj/
 NAME		=	mymalloc
 
 INCDIR		=	./inc/
-INC			=	mymalloc.h
+INC			=	mymalloc.h	page.h
 INCFIL		=	$(addprefix $(INCDIR), $(INC))
 
 SRCDIR		=	./src/
-SRC			=	allocate.c basic.c chunk.c deallocate.c heap.c large.c \
-				main.c page.c reach.c size.c \
+SRC			=	main.c	page.c \
 
 
 OBJ			=	$(SRC:.c=.o)
