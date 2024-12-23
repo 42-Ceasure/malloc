@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1789/06/15 10:55:10 by cglavieu          #+#    #+#             */
-/*   Updated: 2024/12/20 11:05:05 by cglavieu         ###   ########.fr       */
+/*   Updated: 2024/12/23 07:28:02 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,22 @@ static void		del_map(void *page, const size_t len)
 	munmap(page, len); // ret 0 on success, -1 on error. set errno
 }
 
-static void		*get_page_prevpage(size_t *page)
+static size_t	get_page_prevpage(size_t *page)
 {
-	return (get_adress(page + PAGEPREV));
+	return (*(page + PAGEPREV));
 }
 static void		set_page_prevpage(size_t *page, size_t *prevpage)
 {
 	write_adress(page + PAGEPREV, prevpage);
 }
-
-static void		*get_page_nextpage(size_t *page)
+static size_t	get_page_nextpage(size_t *page)
 {
-	return (get_adress(page + PAGENEXT));
+	return (*(page + PAGENEXT));
 }
 static void		set_page_nextpage(size_t *page, size_t *nextpage)
 {
 	write_adress(page + PAGENEXT, nextpage);
 }
-
 static size_t	get_page_size(size_t *page)
 {
 	return (*(page + PAGESIZE));
@@ -62,7 +60,6 @@ static void		set_page_size(size_t *page, const size_t size)
 {
 	*(page + PAGESIZE) = size;
 }
-
 static size_t	get_page_type(size_t *page)
 {
 	return (*(page + PAGETYPE));
@@ -71,7 +68,6 @@ static void		set_page_type(size_t *page, const size_t type)
 {
 	*(page + PAGETYPE) = type;
 }
-
 static size_t	get_page_alloc(size_t *page)
 {
 	return (*(page + PAGEALLOC));
@@ -81,8 +77,15 @@ static void		set_page_alloc(size_t *page, const size_t alloc)
 	*(page + PAGEALLOC) = alloc;
 }
 
-
 /*--- "public" ---*/
+void			init_page(void *page, const size_t size, const size_t type)
+{
+	set_page_prevpage(page, NULL);
+	set_page_nextpage(page, NULL);
+	set_page_size(page, size);
+	set_page_type(page, type);
+	set_page_alloc(page, 0);
+}
 void			*new_page(const size_t nb)
 {
 	return (new_map(nb * SYS_PAGESIZE));
@@ -92,28 +95,7 @@ void			del_page(void *page)
 	del_map(page, get_page_size(page));
 }
 
-void			init_page(void *page, const size_t size, const size_t type)
-{
-	set_page_prevpage(page, NULL);
-	set_page_nextpage(page, NULL);
-	set_page_size(page, size);
-	set_page_type(page, type);
-	set_page_alloc(page, 0);
-}
-
-void			*get_page_linked(void *page, t_pe element)
-{
-	switch (element)
-	{
-		case PREV:
-			return (get_page_prevpage(page));
-		case NEXT:
-			return (get_page_nextpage(page));
-		default:
-			return (NULL);
-	}
-}
-size_t			get_page_info(void *page, t_pe element)
+size_t			get_page_info(void *page, t_epe element)
 {
 	switch (element)
 	{
@@ -123,9 +105,19 @@ size_t			get_page_info(void *page, t_pe element)
 			return (get_page_type(page));
 		case ALLOC:
 			return (get_page_alloc(page));
-		default:
-			return (0);
+		case PREV:
+			return (get_page_prevpage(page));
+		case NEXT:
+			return (get_page_nextpage(page));
 	}
+}
+void			*get_prev_page(void *page)
+{
+	return (get_adress(page + PAGEPREV));
+}
+void			*get_next_page(void *page)
+{
+	return (get_adress(page + PAGENEXT));
 }
 
 void			increment_page_alloc(void *page)
@@ -145,8 +137,8 @@ void			link_pages(void *page1, void *page2)
 void			dump_page(void *page)
 {
 	printf("page:%p, ", page);
-	printf("prev:%p, ", get_page_linked(page, PREV));
-	printf("next:%p, ", get_page_linked(page, NEXT));
+	printf("prev:%p, ", (void *)get_page_info(page, PREV));
+	printf("next:%p, ", (void *)get_page_info(page, NEXT));
 	printf("size:%zu, ", get_page_info(page, SIZE));
 	printf("type:%zu, ", get_page_info(page, TYPE));
 	printf("alloc:%zu, ", get_page_info(page, ALLOC));
