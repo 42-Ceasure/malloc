@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:01:09 by cglavieu          #+#    #+#             */
-/*   Updated: 2025/02/10 13:35:01 by cglavieu         ###   ########.fr       */
+/*   Updated: 2025/02/14 13:08:05 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	*my_malloc(size_t user_size)
 	zone = chunk_manager(page, size);
 	if (zone == NULL)
 		return (NULL);
+	// else incremente page allocations
 	return (zone);
 }
 

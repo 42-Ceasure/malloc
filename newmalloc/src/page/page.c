@@ -6,7 +6,7 @@
 /*   By: cglavieu <cglavieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:03:32 by cglavieu          #+#    #+#             */
-/*   Updated: 2025/02/12 14:54:01 by cglavieu         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:07:22 by cglavieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,6 @@ void	init_heap(void)
 	g_heap->large = NULL;
 }
 
-int		is_type_inited(t_type type)
-{
-	if (g_heap == NULL)
-	{
-		init_heap();
-		return (0);
-	}
-	switch (type)
-	{
-		case TINY:
-			if (g_heap->tiny == NULL)
-				return (0);
-		case MEDIUM:
-			if (g_heap->medium == NULL)
-				return (0);
-		case LARGE:
-			if (g_heap->large == NULL)
-				return (0);
-	}
-	return (1);
-}
-
 void	set_page_id(size_t *page, size_t id)
 {
 	*(page + ID) = id;
@@ -116,7 +94,6 @@ void	set_page_stop(size_t *page, size_t *stopaddr)
 	write_adress((page + STOPADDR), stopaddr);
 }
 
-
 size_t	get_page_id(size_t *page, size_t id)
 {
 	return (*(page + ID));
@@ -131,23 +108,23 @@ void	*get_page_prvp(size_t *page, size_t *prevpage)
 }
 void	*get_page_endp(size_t *page, size_t *lastpage)
 {
-
+	return (get_adress(page + LASTPAGE));
 }
 size_t	get_page_alloc(size_t *page, size_t allocations)
 {
-
+	return (*(page + ALLOCATIONS));
 }
 size_t	get_page_max(size_t *page, size_t maxallocable)
 {
-
+	return (*(page + MAXALLOCABLE));
 }
 void	*get_page_start(size_t *page, size_t *startaddr)
 {
-
+	return (get_adress(page + STARTADDR));
 }
 void	*get_page_stop(size_t *page, size_t *stopaddr)
 {
-
+	return (get_adress(page + STOPADDR));
 }
 
 void	init_page_header(void *page, size_t size)
@@ -176,6 +153,28 @@ void	*new_page(size_t nb)
 	return (page);
 }
 
+int		is_type_inited(t_type type)
+{
+	if (g_heap == NULL)
+	{
+		init_heap();
+		return (0);
+	}
+	switch (type)
+	{
+		case TINY:
+			if (g_heap->tiny == NULL)
+				return (0);
+		case MEDIUM:
+			if (g_heap->medium == NULL)
+				return (0);
+		case LARGE:
+			if (g_heap->large == NULL)
+				return (0);
+	}
+	return (1);
+}
+
 void	set_type_root(t_type type)
 {
 	switch (type)
@@ -201,7 +200,7 @@ void	*get_type_root(t_type type)
 			return (g_heap->large);
 	}
 }
-
+		
 void	*find_fit_page(void *page, size_t size);
 
 void	extend_root(void *page);
